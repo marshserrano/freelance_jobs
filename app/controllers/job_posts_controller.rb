@@ -1,21 +1,21 @@
 class JobPostsController < ApplicationController
 
   def index
-    @jobposts = JobPost.all
+    @job_posts = JobPost.all
   end
 
   def show
-    @jobpost = JobPost.find(params[:id])
+    @job_post = JobPost.find(params[:id])
   end
 
   def new
-    @jobpost = JobPost.new
+    @job_post = JobPost.new
   end
 
   def create
-    @jobpost = JobPost.new(jobpost_params)
-    if @jobpost.save
-      redirect_to @jobpost
+    @job_post = JobPost.new(job_post_params)
+    if @job_post.save
+      redirect_to dashboard_path
     else
       render 'new'
     end
@@ -26,7 +26,7 @@ class JobPostsController < ApplicationController
 
   private
 
-  def jobpost_params
-    params.require(:jobpost).permit(:name, :description, :skills, :budget, :hours_of_work, :status)
+  def job_post_params
+    params.require(:job_post).permit(:name, :description, :skills, :budget, :hours_of_work, :status)
   end
 end

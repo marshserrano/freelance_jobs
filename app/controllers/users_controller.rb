@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :show]
 
   def index
-    @jobposts = JobPost.all
+    @job_posts = JobPost.all
   end
 
   def show
@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     else
       render 'users/freelancer'
     end
-    @user.jobposts
+    @user.job_posts
   end
 
   def new
