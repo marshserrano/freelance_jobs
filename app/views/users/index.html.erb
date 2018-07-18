@@ -9,42 +9,39 @@
   </aside>
 </div>
 <div class="row">
-  <aside class="col-md-4">
+  <aside class="col-md-3">
     <section class="user_info">
-      <h1>
-        Welcome,
+      <h4>
+        Welcome,<br>
         <%= current_user.name %> <br>
-      </h1>
+      </h4>
     </section>
   </aside>
-</div>
 
-<% if current_user.employer? %>
-<!-- JOB POSTS  -->
-<div class="row">
-<div class="col-md-8">
-  <section class="user_info">
-    <% if @job_posts.any? %>
-      <h4>Job Posts (<%= @job_posts.count %>)</h4>
-      <ul class="job_posts">
-        <%= render @job_posts %>
-      </ul>
-    <% end %>
-  </section>
-</div>
-</div>
+  <% if current_user.employer? %>
+  <!-- JOB POSTS  -->
+  <div class="col-md-8">
+    <section class="user_info"> <br>
+      <% if @job_posts.any? %>
+        <h4>Job Posts (<%= @job_posts.count %>)</h4>
+        <%= link_to 'Add New', job_posts_new_path, class:"btn btn-default" %>
+        <br><br>
+        <ul class="job_posts">
+          <%= render @job_posts %>
+        </ul>
+        <%= will_paginate @job_posts_paginate %>
+      <% end %>
+    </section><br><br>
+  </div>
+  <% else %>
 
-<%= link_to 'Add New', job_posts_new_path, class:"btn btn-default" %>
+  <!-- JOB APPLICATIONS  -->
+  <div class="col-md-8">
+    <section class="user_info">
+        <h4>Job Applications</h4>
+    </section>
+  </div>
 
-<% else %>
+  <% end %>
 
-<!-- JOB APPLICATIONS  -->
-<div class="row">
-<div class="col-md-8">
-  <section class="user_info">
-      <h4>Job Applications</h4>
-  </section>
 </div>
-</div>
-
-<% end %>
