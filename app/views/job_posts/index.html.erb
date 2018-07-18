@@ -2,9 +2,19 @@
 <div class="row">
   <aside class="col-md-4">
     <section class="user_info">
-      <h1>
-        Job Posts
-      </h1>
+      <h4>Job Posts (<%= @job_posts.count %>)</h4>
+      <% @job_posts.each do |j| %>
+        <ul class="job_posts">
+          Employer: <%= j.user.name %> <br>
+          Job Post: <%= j.name %> <br>
+          Skills Required: <%= j.skills %> <br>
+          Budget: <%= j.budget %> <br>
+          Hours of work: <%= j.hours_of_work %> <br>
+          Status: <%= j.status %> <br>
+          Posted <%= time_ago_in_words(j.created_at) %> ago.
+        </ul>
+        <%= link_to 'Apply', "#", class: "btn btn-default" %>
+      <% end %>
     </section>
   </aside>
 </div>

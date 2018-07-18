@@ -13,7 +13,7 @@ class JobPostsController < ApplicationController
   end
 
   def create
-    @job_post = JobPost.new(job_post_params)
+    @job_post = current_user.job_posts.create(job_post_params)
     if @job_post.save
       redirect_to dashboard_path
     else
@@ -27,6 +27,6 @@ class JobPostsController < ApplicationController
   private
 
   def job_post_params
-    params.require(:job_post).permit(:name, :description, :skills, :budget, :hours_of_work, :status)
+    params.require(:job_post).permit(:name, :description, :skills, :budget, :hours_of_work, :status, :user_id)
   end
 end

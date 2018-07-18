@@ -18,18 +18,33 @@
     </section>
   </aside>
 </div>
+
+<% if current_user.employer? %>
+<!-- JOB POSTS  -->
 <div class="row">
-  <aside class="col-md-4">
-    <section class="user_info">
-      <h1>
-        Job Posts
-      </h1>
-      <% @job_posts.each do |j| %>
-      <%= j.name %> <br>
-      <%= j.description %>
-      <% end %>
-    </section>
-  </aside>
+<div class="col-md-8">
+  <section class="user_info">
+    <% if @job_posts.any? %>
+      <h4>Job Posts (<%= @job_posts.count %>)</h4>
+      <ul class="job_posts">
+        <%= render @job_posts %>
+      </ul>
+    <% end %>
+  </section>
+</div>
 </div>
 
-<%= link_to 'Add New', job_posts_new_path %>
+<%= link_to 'Add New', job_posts_new_path, class:"btn btn-default" %>
+
+<% else %>
+
+<!-- JOB APPLICATIONS  -->
+<div class="row">
+<div class="col-md-8">
+  <section class="user_info">
+      <h4>Job Applications</h4>
+  </section>
+</div>
+</div>
+
+<% end %>
