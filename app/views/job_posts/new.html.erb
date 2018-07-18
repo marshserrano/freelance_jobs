@@ -1,0 +1,27 @@
+<% provide(:title, 'New Job Post') %>
+<h1>New Job Post</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@jobpost) do |f| %>
+      <%= render 'shared/jobpost_error_messages' %>
+
+      <%= f.label "Choose a name for your job post" %>
+      <%= f.text_field :name, class: 'form-control', placeholder: 'name' %>
+
+      <%= f.label "Tell us more about your job post" %>
+      <%= f.text_area :description, class: 'form-control', placeholder: 'description' %>
+
+      <%= f.label "What skills are required?" %>
+      <%= f.text_field :skills, class: 'form-control', placeholder: 'skills' %>
+
+      <%= f.label :budget %>
+      <%= f.number_field :budget, class: 'form-control', placeholder: 'per hour' %>
+
+      <%= f.label :hours_of_work %>
+      <%= f.number_field :hours_of_work, class: 'form-control', placeholder: 'hour/week' %>
+
+      <%= f.submit "Post", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

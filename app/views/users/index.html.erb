@@ -1,0 +1,35 @@
+<% provide(:title, "Dashboard") %>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        Dashboard
+      </h1>
+    </section>
+  </aside>
+</div>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        Welcome,
+        <%= current_user.name %> <br>
+      </h1>
+    </section>
+  </aside>
+</div>
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        Job Posts
+      </h1>
+      <% @jobposts.each do |j| %>
+      <%= j.name %> <br>
+      <%= j.description %>
+      <% end %>
+    </section>
+  </aside>
+</div>
+
+<%= link_to 'Add New', job_posts_new_path %>
