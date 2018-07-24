@@ -16,7 +16,11 @@
             <span class="timestamp">
               Posted <%= time_ago_in_words(j.created_at) %> ago.
             </span>
+            <% if current_user.employer? %>
+
+            <% else %>
             <%= link_to 'Apply', "#", class: "btn btn-default" %>
+            <% end %>
           </li>
         </ul>
       <% end %>

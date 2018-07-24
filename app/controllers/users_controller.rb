@@ -1,15 +1,36 @@
 class UsersController < ApplicationController
 
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
-  before_action :correct_user,   only: [:edit, :update]
+
+  #employer
+  def job_invitations
+    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", current_user.id, @recipient)
+  end
+
+  def job_applicants
+    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", @sender, current_user.id)
+  end
+
+  #freelancer
+  def job_applications
+    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", current_user.id, @recipient)
+  end
+
+  def job_invites
+    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", @sender, current_user.id)
+  end
 
   def index
     @job_posts = current_user.job_posts
-    @job_posts_paginate = @job_posts.paginate(page: params[:page])
+    @users = User.all
+  end
+
+  def freelancer
+    @freelancers = User.where(user_type: 'Freelancer')
   end
 
   def show
-    @user = User.find(params[:id])
   end
 
   def new
@@ -19,21 +40,36 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to @user
+      redirect_to dashboard_path
     else
       render 'new'
     end
   end
 
+  def edit
+    @user = current_user
+  end
+
+  def update
+    @user = current_user
+    if @user.update_attributes(user_params)
+      flash[:success] = "Profile successfully updated!"
+      redirect_to @user
+    else
+      render 'edit'
+    end
+  end
+
   private
+
+  def set_user
+      @user = User.find(params[:id])
+  end
 
   def user_params
     params.require(:user).permit(:user_type, :name, :email,
-                                 :password, :password_confirmation)
-  end
-
-  def correct_user
-    @user = user
-    redirect_to(root_url) unless current_user?(@user)
+                                 :password, :password_confirmation,
+                                 :company_name, :job_title, :location,
+                                 :brief_intro, :summary, :skills)
   end
 end

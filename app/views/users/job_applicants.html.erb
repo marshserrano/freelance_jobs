@@ -1,0 +1,42 @@
+<% provide(:title, "Job Invitations") %>
+<%= render 'index_sidebar' %>
+
+<div class="col-md-8">
+  <section class="user_info">
+    <h4>Applicants</h4>
+    <br>
+    <ul class="job_posts">
+      <li>
+        <table>
+          <thead>
+            <tr>
+              <th>Job Name</th>
+              <th>Freelancer</th>
+              <th>Message</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @messages.each do |message| %>
+              <tr id="message-<%= message.id %>">
+                <td><%= message.job_post.name %></td>
+                <td><%= link_to message.sender.name, message %></td>
+                <td><%= message.content %></td>
+                <td><%= message.status %></td>
+                <td><%= link_to 'Hire',
+                                  {controller: "message",
+                                   action: "status",
+                                   id: message.id,
+                                   decision: "true"},
+                                   method: 'post',
+                                   class: "btn btn-sm btn-success" %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </li>
+    </ul>
+  </section>
+</div>

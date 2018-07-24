@@ -1,0 +1,39 @@
+<% provide(:title, 'Edit Profile') %>
+<div class="row">
+  <aside class="col-md-3">
+    <%= render 'show_sidebar' %>
+  </aside><br><br><br>
+  <div class="col-md-6">
+    <%= form_for(@user) do |f| %>
+      <%= render 'shared/error_messages' %>
+
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+
+      <% if current_user.employer? %>
+      <%= f.label :company_name %>
+      <%= f.text_field :company_name, class: 'form-control' %>
+
+      <%= f.label :job_title %>
+      <%= f.text_field :job_title, class: 'form-control' %>
+
+      <% else %>
+
+      <%= f.label :brief_intro %>
+      <%= f.text_field :brief_intro, class: 'form-control' %>
+
+      <%= f.label :summary %>
+      <%= f.text_area :summary, class: 'form-control' %>
+
+      <%= f.label :skills %>
+      <%= f.text_field :skills, class: 'form-control' %>
+
+      <% end %>
+
+      <%= f.label :location %>
+      <%= f.text_field :location, class: 'form-control' %>
+
+      <%= f.submit "Edit Profile", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

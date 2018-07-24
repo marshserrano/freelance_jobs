@@ -1,0 +1,27 @@
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+        Dashboard
+      </h1>
+    </section>
+  </aside>
+</div>
+  <aside class="col-md-3">
+    <section class="user_info">
+      <h4>
+        Welcome,<br>
+        <%= current_user.name %> <br>
+      </h4>
+      <ul>
+        <% if current_user.employer? %>
+        <li><%= link_to 'Dashboard', dashboard_path %></li>
+        <li><%= link_to 'Job Invitations', invites_path %></li>
+        <li><%= link_to 'Applicants', applicants_path %></li>
+        <% else %>
+        <li><%= link_to 'Job Applications', applications_path %></li>
+        <li><%= link_to 'Job Invitations', invitations_path %></li>
+        <% end %>
+      </ul>
+    </section>
+  </aside>

@@ -1,0 +1,15 @@
+<% provide(:title, @message.sender.name) %>
+<%= render 'users/index_sidebar' %>
+<div class="row">
+  <div class="col-md-8">
+    <section class="user_info">
+        <h4>User Profile</h4><br>
+          Name: <%= @message.sender.name %><br>
+          Brief Intro: <%= @message.sender.brief_intro %><br>
+          Summary: <%= @message.sender.summary %><br>
+          Skills: <%= @message.sender.skills %><br>
+          Location: <%= @message.sender.location %>
+    </section><br><br>
+    <%= render 'users/show_reviews' %>
+  </div>
+</div>

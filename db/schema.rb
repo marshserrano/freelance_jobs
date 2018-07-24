@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_17_092742) do
+ActiveRecord::Schema.define(version: 2018_07_20_052013) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,17 @@ ActiveRecord::Schema.define(version: 2018_07_17_092742) do
     t.index ["user_id"], name: "index_job_posts_on_user_id"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.string "status", default: "pending"
+    t.integer "sender_id"
+    t.bigint "job_post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "recipient_id"
+    t.index ["job_post_id"], name: "index_messages_on_job_post_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -35,6 +46,12 @@ ActiveRecord::Schema.define(version: 2018_07_17_092742) do
     t.string "user_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "company_name"
+    t.string "job_title"
+    t.string "brief_intro"
+    t.text "summary"
+    t.string "skills"
+    t.string "location"
   end
 
   add_foreign_key "job_posts", "users"

@@ -1,14 +1,22 @@
 <header class="navbar navbar-fixed-top navbar-default">
   <div class="container">
     <% if logged_in? %>
-    <%= link_to "Freelance Jobs", dashboard_path, id: "logo" %>
+    <% if current_user.employer? %>
+      <%= link_to "Freelance Jobs", dashboard_path, id: "logo" %>
+    <% else %>
+      <%= link_to "Freelance Jobs", applications_path, id: "logo" %>
+    <% end %>
     <% else %>
     <%= link_to "Freelance Jobs", root_path, id: "logo" %>
     <% end %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
         <% if logged_in? %>
+        <% if current_user.employer? %>
           <li><%= link_to "Dashboard", dashboard_path %></li>
+        <% else %>
+          <li><%= link_to "Dashboard", applications_path %></li>
+        <% end %>
           <li><%= link_to "Freelancers", freelancer_path %></li>
           <li><%= link_to "Jobs", job_posts_path %></li>
           <li class="dropdown">

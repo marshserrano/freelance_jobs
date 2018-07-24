@@ -257,3 +257,23 @@ aside {
     margin-bottom: 5px;
   }
 }
+
+table {
+    border-collapse: collapse;
+	width: 600px;
+
+}
+
+table, td, th {
+    border: 1px solid gray;
+}
+th {
+  border: 1px solid gray;
+	padding: 1%;
+	text-align: center;
+	background-color: #2459af;
+    color: white;
+}
+td {
+	text-align: center;
+}

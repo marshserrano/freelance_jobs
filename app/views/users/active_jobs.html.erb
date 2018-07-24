@@ -1,0 +1,31 @@
+<% provide(:title, 'Active Jobs') %>
+<div class="row">
+  <aside class="col-md-3">
+    <%= render 'show_sidebar' %>
+  </aside><br><br><br>
+  <div class="col-md-8">
+    <section class="user_info">
+        <h4>Active Jobs</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Job Name</th>
+              <th>Freelancer</th>
+              <th>Status</th>
+              <th colspan="2">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+              <tr>
+                <td>Name</td>
+                <td>Freelancer Name</td>
+                <td>In progress</td>
+                <td><%= link_to 'Show', "#" %></td>
+                <td><%= link_to 'Edit', "#" %></td>
+              </tr>
+          </tbody>
+        </table>
+    </section>
+  </div>
+</div>
