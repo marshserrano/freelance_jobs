@@ -1,9 +1,9 @@
 <% provide(:title, "Job Invitations") %>
-<%= render 'index_sidebar' %>
+<%= render 'users/index_sidebar' %>
 
 <div class="col-md-8">
   <section class="user_info">
-    <h4>Applicants</h4>
+    <h4>Job Invitations</h4>
     <br>
     <ul class="job_posts">
       <li>
@@ -11,29 +11,28 @@
           <thead>
             <tr>
               <th>Job Name</th>
-              <th>Freelancer</th>
+              <th>Employer</th>
               <th>Message</th>
               <th>Status</th>
-              <th>Action</th>
+              <th colspan="2">Action</th>
             </tr>
           </thead>
 
           <tbody>
+          <% if @messages.any? %>
             <% @messages.each do |message| %>
               <tr id="message-<%= message.id %>">
                 <td><%= message.job_post.name %></td>
-                <td><%= link_to message.sender.name, message %></td>
+                <td><%= message.sender.name %></td>
                 <td><%= message.content %></td>
                 <td><%= message.status %></td>
-                <td><%= link_to 'Hire',
-                                  {controller: "message",
-                                   action: "status",
-                                   id: message.id,
-                                   decision: "true"},
-                                   method: 'post',
-                                   class: "btn btn-sm btn-success" %></td>
+                <td><%= link_to 'Accept', "#" %></td>
+                <td><%= link_to 'Decline', "#" %></td>
               </tr>
             <% end %>
+          <% else %>
+            <tr><td colspan="5">There are currently no job invitations</td></tr>
+          <% end %>
           </tbody>
         </table>
       </li>

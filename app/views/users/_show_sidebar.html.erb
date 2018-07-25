@@ -4,14 +4,4 @@
     <li><%= link_to 'Profile', current_user %></li>
     <li><%= link_to 'Edit Profile', edit_user_path(current_user) %></li>
   </ul>
-  <br>
-  <h1>Jobs</h1>
-  <ul>
-    <li><%= link_to 'Work In Progress', active_jobs_path %></li>
-    <% if current_user.employer? %>
-    <li><%= link_to 'Completed', completed_path %></li>
-    <% else %>
-    <li><%= link_to 'Past Jobs', "#" %></li>
-    <% end %>
-  </ul>
 </section>

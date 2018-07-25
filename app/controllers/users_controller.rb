@@ -3,31 +3,9 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
 
-  #employer
-  def job_invitations
-    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", current_user.id, @recipient)
-  end
-
-  def job_applicants
-    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", @sender, current_user.id)
-  end
-
-  #freelancer
-  def job_applications
-    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", current_user.id, @recipient)
-  end
-
-  def job_invites
-    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", @sender, current_user.id)
-  end
-
   def index
     @job_posts = current_user.job_posts
     @users = User.all
-  end
-
-  def freelancer
-    @freelancers = User.where(user_type: 'Freelancer')
   end
 
   def show

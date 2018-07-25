@@ -1,0 +1,47 @@
+<% provide(:title, "Job Invitations") %>
+<%= render 'users/index_sidebar' %>
+
+<div class="col-md-8">
+  <section class="user_info">
+    <h4>Applicants</h4>
+    <br>
+    <ul class="job_posts">
+      <li>
+        <table>
+          <thead>
+            <tr>
+              <th>Job Name</th>
+              <th>Freelancer</th>
+              <th>Message</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+          <% if @messages.any? %>
+            <% @messages.each do |message| %>
+              <% if message.pending? %>
+                <tr id="message-<%= message.id %>">
+                  <td><%= message.job_post.name %></td>
+                  <td><%= link_to message.sender.name, message %></td>
+                  <td><%= message.content %></td>
+                  <td><%= message.status %></td>
+                  <td><%= link_to 'Hire', message,
+                                  action: "status",
+                                  id: message.id,
+                                  method: 'post',
+                                  data: { confirm: 'Are you sure you want to hire this freelancer?' }%>
+                  </td>
+                </tr>
+              <% end %>
+            <% end %>
+          <% else %>
+            <tr><td colspan="5">There are currently no applicants</td></tr>
+          <% end %>
+          </tbody>
+        </table>
+      </li>
+    </ul>
+  </section>
+</div>

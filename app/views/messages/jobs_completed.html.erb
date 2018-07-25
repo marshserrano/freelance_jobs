@@ -1,0 +1,43 @@
+<% provide(:title, 'Active Jobs') %>
+<%= render 'users/index_sidebar' %>
+  <div class="col-md-8">
+    <section class="user_info">
+        <h4>Completed Jobs</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Job Name</th>
+              <% if current_user.employer? %>
+              <th>Freelancer</th>
+              <% else %>
+              <th>Employer</th>
+              <% end %>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+          <% if @messages.any? %>
+            <% @messages.each do |message| %>
+              <% if message.completed? %>
+                <tr id="message-<%= message.id %>">
+                  <td><%= message.job_post.name %></td>
+                  <td><%= link_to message.sender.name, message %></td>
+                  <td><%= message.status %></td>
+                  <% if current_user.employer? %>
+                  <td><%= link_to 'Rate Freelancer', "#"%></td>
+                  <% else %>
+                  <td><%= link_to 'Rate Employer', "#"%></td>
+                  <% end %>
+                </tr>
+              <% end %>
+            <% end %>
+          <% else %>
+            <tr><td colspan="4">There are currently no completed jobs</td></tr>
+          <% end %>
+          </tbody>
+        </table>
+    </section>
+  </div>
+</div>

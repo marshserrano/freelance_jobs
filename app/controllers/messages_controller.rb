@@ -6,15 +6,41 @@ class MessagesController < ApplicationController
   before_action :set_job, only: [:new, :create]
   before_action :set_job_posts, only: [:new, :create]
 
+  before_action :set_sender, only: [:job_invitations, :job_applications]
+  before_action :set_receiver, only: [:job_applicants, :job_invites, :jobs_completed]
+  before_action :set_sender_receiver, only: [:jobs_active]
+
+  #employer
+  def job_invitations
+  end
+
+  def job_applicants
+  end
+
+  def jobs_active
+  end
+
+  def jobs_completed
+  end
+
+  #freelancer
+  def job_applications
+  end
+
+  def job_invites
+  end
+
   def status
-    @message = Message.where(id: params[:id])
-    if params[:decision] == "true"
-      @message.update(status: "accepted")
-    else
-      @message.update(status: "declined")
-    end
+    @message = Message.find_by(id: params[:id])
+    @message.update(status: "accepted")
+    @job_post = JobPost.where(id: @message.job_post_id)
+    @job_post.update(status: "closed")
     redirect_to applicants_path
   end
+
+  # def accept
+  #   @accepted = Message.where(status: 'accepted')
+  # end
 
   def index
     @messages = Message.all
@@ -52,6 +78,19 @@ class MessagesController < ApplicationController
   def message_params
     params.require(:message).permit(:content, :status, :sender_id,
                                     :recipient_id, :job_post_id)
+  end
+
+  def set_sender_receiver
+    @messages = Message.all.where("sender_id = ? OR recipient_id = ? OR recipient_id = ? OR sender_id = ?",
+                                  current_user.id, @recipient, current_user.id, @sender)
+  end
+
+  def set_sender
+    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", current_user.id, @recipient)
+  end
+
+  def set_receiver
+    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", @sender, current_user.id)
   end
 
   def set_employer

@@ -9,7 +9,6 @@
     Posted <%= time_ago_in_words(job_post.created_at) %> ago.
   </span>
   <% if current_user?(job_post.user) %>
-  <%= link_to 'View', job_post, class:"btn btn-default btn-sm" %>
   <%= link_to 'Edit', edit_job_post_path(job_post), class:"btn btn-primary btn-sm" %>
   <%= link_to 'Delete', job_post, method: :delete, data:
                 { confirm: 'Are you sure you want to delete this job post?' },

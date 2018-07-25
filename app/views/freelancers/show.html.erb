@@ -1,0 +1,19 @@
+<% provide(:title, @user.name) %>
+<div class="row">
+  <div class="col-md-8">
+    <section class="user_info">
+        <h4>User Profile</h4>
+          Name: <%= @user.name %><br>
+          Brief Intro: <%= @user.brief_intro %><br>
+          Summary: <%= @user.summary %><br>
+          Skills: <%= @user.skills %><br>
+          Location: <%= @user.location %>
+    </section><br>
+    <section class="user_info">
+        <h4>Job History</h4>
+    </section><br>
+    <section class="user_info">
+        <h4>Reviews</h4>
+    </section><br>
+  </div>
+</div>

@@ -1,10 +1,25 @@
-<% provide(:title, @user.name) %>
+<% provide(:title, current_user.name) %>
 <div class="row">
   <aside class="col-md-3">
     <%= render 'show_sidebar' %>
   </aside>
   <div class="col-md-8">
-    <%= render 'show_user_profile' %>
-    <%= render 'show_reviews' %>
+    <section class="user_info">
+        <h4>User Profile</h4><br>
+          Name: <%= current_user.name %><br>
+          <% if current_user.employer? %>
+          Company: <%= current_user.company_name %><br>
+          Job Title: <%= current_user.job_title %><br>
+          Location: <%= current_user.location %>
+          <% else %>
+          Brief Intro: <%= current_user.brief_intro %><br>
+          Summary: <%= current_user.summary %><br>
+          Skills: <%= current_user.skills %><br>
+          Location: <%= current_user.location %>
+          <% end %>
+    </section><br><br>
+    <section class="user_info">
+        <h4>Reviews</h4><br>
+    </section><br><br>
   </div>
 </div>

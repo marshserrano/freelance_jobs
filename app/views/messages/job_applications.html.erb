@@ -1,0 +1,44 @@
+<% provide(:title, "Job Applications") %>
+<%= render 'users/index_sidebar' %>
+
+<div class="col-md-8">
+  <section class="user_info">
+    <h4>Job Applications</h4>
+    <%= link_to 'Add New', messages_new_path, class:"btn btn-default btn-sm" %>
+    <br><br>
+    <ul class="job_posts">
+      <li>
+        <table>
+          <thead>
+            <tr>
+              <th>Job Name</th>
+              <th>Employer</th>
+              <th>Message</th>
+              <th>Status</th>
+              <th colspan="2">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+          <% if @messages.any? %>
+            <% @messages.each do |message| %>
+              <% if message.pending? %>
+                <tr id="message-<%= message.id %>">
+                  <td><%= message.job_post.name %></td>
+                  <td><%= message.recipient.name %></td>
+                  <td><%= message.content %></td>
+                  <td><%= message.status %></td>
+                  <td><%= link_to 'Edit', "#" %></td>
+                  <td><%= link_to 'Cancel', "#" %></td>
+                </tr>
+                <% end %>
+              <% end %>
+          <% else %>
+            <tr><td colspan="5">There are currently no job applications</td></tr>
+          <% end %>
+          </tbody>
+        </table>
+      </li>
+    </ul>
+  </section>
+</div>

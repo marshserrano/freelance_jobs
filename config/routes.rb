@@ -2,26 +2,40 @@ Rails.application.routes.draw do
   get 'message/new'
   root   'pages#home'
   get    'sessions/new'
+
+  #messages
   get    '/messages',           to: 'messages#index'
   get    '/messages/new',       to: 'messages#new'
   get    '/messages/:id',       to: 'messages#show', as: 'profile'
+  post   '/messages/:id',       to: 'messages#status'
+  get    '/invitations',        to: 'messages#job_invitations'
+  get    '/applicants',         to: 'messages#job_applicants'
+  get    '/applications',       to: 'messages#job_applications'
+  get    '/invites',            to: 'messages#job_invites'
+  get    '/active',             to: 'messages#jobs_active'
+  get    '/completed',          to: 'messages#jobs_completed'
+
+  #job_posts
   get    '/job_posts',          to: 'job_posts#index'
   get    '/job_posts/new',      to: 'job_posts#new'
   get    '/job_posts/:id',      to: 'job_posts#show'
+
+  #freelancer
+  get    '/freelancers',        to: 'freelancers#index'
+  get    '/freelancers/:id',    to: 'freelancers#show', as: 'freelancer_profile'
+
+  #users
   get    '/dashboard',          to: 'users#index'
   get    '/register',           to: 'users#new'
-  get    '/freelancer',         to: 'users#freelancer'
-  get    '/active_jobs',        to: 'users#active_jobs'
-  get    '/completed',          to: 'users#completed_jobs'
-  get    '/invites',            to: 'users#job_invitations'
-  get    '/invitations',        to: 'users#job_invites'
-  get    '/applicants',         to: 'users#job_applicants'
-  get    '/applications',       to: 'users#job_applications'
-  get    '/user_profile/:id',   to: 'users#user_profile', as: :user_profile
+
+  #sessions
   get    '/login',              to: 'sessions#new'
   post   '/login',              to: 'sessions#create'
   delete '/logout',             to: 'sessions#destroy'
+
+  #resources
+  resources :messages,          only: [:index, :create, :new, :show, :destroy]
   resources :job_posts,         only: [:new, :create, :edit, :update, :destroy]
   resources :users
-  resources :messages,          only: [:index, :create, :new, :show, :destroy]
+
 end
