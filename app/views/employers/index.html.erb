@@ -1,19 +1,18 @@
-<% provide(:title, "Freelancers") %>
+<% provide(:title, "Employers") %>
 <div class="row">
   <aside class="col-md-8">
     <section class="user_info">
       <h1>
-        Freelancers
+        Freelancers (<%= @employers.count %>)
       </h1>
-        <% @freelancers.each do |f| %>
+        <% @employers.each do |f| %>
           <ul class="job_posts">
               <li id="user-<%= f.id %>">
-                Name: <%= link_to f.name, freelancer_profile_path(f.id)%><br>
+                Name: <%= link_to f.name, employer_profile_path(f.id)%><br>
                 Brief Intro: <%= f.brief_intro %><br>
                 Summary: <%= f.summary %><br>
                 Skills: <%= f.skills %><br>
                 Location: <%= f.location %><br>
-                Rate: <%= f.rate %> per hour
               </li>
           </ul>
         <% end %>

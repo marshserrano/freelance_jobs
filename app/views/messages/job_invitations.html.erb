@@ -21,16 +21,20 @@
 
           <tbody>
             <% if @messages.any? %>
-            <% @messages.each do |message| %>
-              <tr id="message-<%= message.id %>">
-                <td><%= message.job_post.name %></td>
-                <td><%= message.recipient.name %></td>
-                <td><%= message.content %></td>
-                <td><%= message.status %></td>
-                <td><%= link_to 'Edit', "#" %></td>
-                <td><%= link_to 'Cancel', "#" %></td>
-              </tr>
-            <% end %>
+              <% @messages.each do |message| %>
+                <% if message.pending? %>
+                  <tr id="message-<%= message.id %>">
+                    <td><%= message.job_post.name %></td>
+                    <td><%= message.recipient.name %></td>
+                    <td><%= message.content %></td>
+                    <td><%= message.status %></td>
+                    <td><%= link_to 'Edit', "#" %></td>
+                    <td><%= link_to 'Cancel', "#" %></td>
+                  </tr>
+                <% else %>
+                  <tr><td colspan="5">There are currently no job applications</td></tr>
+                <% end %>
+              <% end %>
             <% else %>
               <tr><td colspan="5">There are currently no job invitations</td></tr>
             <% end %>

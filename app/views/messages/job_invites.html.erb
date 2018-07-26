@@ -21,14 +21,31 @@
           <tbody>
           <% if @messages.any? %>
             <% @messages.each do |message| %>
-              <tr id="message-<%= message.id %>">
-                <td><%= message.job_post.name %></td>
-                <td><%= message.sender.name %></td>
-                <td><%= message.content %></td>
-                <td><%= message.status %></td>
-                <td><%= link_to 'Accept', "#" %></td>
-                <td><%= link_to 'Decline', "#" %></td>
-              </tr>
+              <% if message.pending? %>
+                <tr id="message-<%= message.id %>">
+                  <td><%= message.job_post.name %></td>
+                  <td><%= message.sender.name %></td>
+                  <td><%= message.content %></td>
+                  <td><%= message.status %></td>
+                  <td><%= link_to 'Accept', accept_path(message.id),
+                                  data: { confirm: 'Are you sure you want to accept this job?' }%></td>
+                  <td><%= link_to 'Decline', decline_path(message.id),
+                                  data: { confirm: 'Are you sure you want to decline this job?' }%></td>
+                </tr>
+              <% elsif message.declined? %>
+                <tr id="message-<%= message.id %>">
+                  <td><%= message.job_post.name %></td>
+                  <td><%= message.sender.name %></td>
+                  <td><%= message.content %></td>
+                  <td><%= message.status %></td>
+                  <td><%= link_to 'Accept', accept_path(message.id),
+                                  data: { confirm: 'Are you sure you want to accept this job?' }%></td>
+                  <td><%= link_to 'Decline', decline_path(message.id),
+                                  data: { confirm: 'Are you sure you want to decline this job?' }%></td>
+                </tr>
+              <% else %>
+                <tr><td colspan="5">There are currently no job invitations</td></tr>
+              <% end %>
             <% end %>
           <% else %>
             <tr><td colspan="5">There are currently no job invitations</td></tr>

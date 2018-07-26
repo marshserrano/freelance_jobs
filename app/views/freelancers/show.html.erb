@@ -7,11 +7,15 @@
           Brief Intro: <%= @user.brief_intro %><br>
           Summary: <%= @user.summary %><br>
           Skills: <%= @user.skills %><br>
-          Location: <%= @user.location %>
+          Location: <%= @user.location %><br>
+          Rate: <%= @user.rate %> per hour
     </section><br>
+    <% if @messages.any? %>
     <section class="user_info">
         <h4>Job History</h4>
+        <%= render 'messages/job_history'  %>
     </section><br>
+    <% end %>
     <section class="user_info">
         <h4>Reviews</h4>
     </section><br>

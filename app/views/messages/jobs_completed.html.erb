@@ -1,35 +1,33 @@
 <% provide(:title, 'Active Jobs') %>
 <%= render 'users/index_sidebar' %>
   <div class="col-md-8">
+  <% if current_user.employer? %>
     <section class="user_info">
         <h4>Completed Jobs</h4>
         <table>
           <thead>
             <tr>
               <th>Job Name</th>
-              <% if current_user.employer? %>
               <th>Freelancer</th>
-              <% else %>
-              <th>Employer</th>
-              <% end %>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
-
           <tbody>
           <% if @messages.any? %>
             <% @messages.each do |message| %>
               <% if message.completed? %>
                 <tr id="message-<%= message.id %>">
                   <td><%= message.job_post.name %></td>
-                  <td><%= link_to message.sender.name, message %></td>
-                  <td><%= message.status %></td>
-                  <% if current_user.employer? %>
-                  <td><%= link_to 'Rate Freelancer', "#"%></td>
+                  <% if message.sender.user_type == "Freelancer" %>
+                  <td><%= link_to message.sender.name,
+                          employer_profile_path(message.sender.id) %></td>
                   <% else %>
-                  <td><%= link_to 'Rate Employer', "#"%></td>
+                  <td><%= link_to message.recipient.name,
+                          employer_profile_path(message.sender.id) %></td>
                   <% end %>
+                  <td><%= message.status %></td>
+                  <td><%= link_to 'Rate Freelancer', "#"%></td>
                 </tr>
               <% end %>
             <% end %>
@@ -39,5 +37,42 @@
           </tbody>
         </table>
     </section>
+  <% else %>
+    <section class="user_info">
+        <h4>Past Jobs</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Job Name</th>
+              <th>Employer</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% if @messages.any? %>
+            <% @messages.each do |message| %>
+              <% if message.completed? %>
+                <tr id="message-<%= message.id %>">
+                  <td><%= message.job_post.name %></td>
+                  <% if message.sender.user_type == "Employer" %>
+                  <td><%= link_to message.sender.name,
+                          employer_profile_path(message.sender.id) %></td>
+                  <% else %>
+                  <td><%= link_to message.recipient.name,
+                          employer_profile_path(message.sender.id) %></td>
+                  <% end %>
+                  <td><%= message.status %></td>
+                  <td><%= link_to 'Rate Employer', "#"%></td>
+                </tr>
+              <% end %>
+            <% end %>
+          <% else %>
+            <tr><td colspan="4">There are currently no completed jobs</td></tr>
+          <% end %>
+          </tbody>
+        </table>
+    </section>
+  <% end %>
   </div>
 </div>

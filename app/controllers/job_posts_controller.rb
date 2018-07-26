@@ -4,7 +4,7 @@ class JobPostsController < ApplicationController
   before_action :correct_user,   only: :destroy
 
   def index
-    @job_posts = JobPost.all
+    @job_posts = JobPost.where(status: "open")
   end
 
   def show

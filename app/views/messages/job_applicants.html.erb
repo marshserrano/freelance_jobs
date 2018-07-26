@@ -14,7 +14,7 @@
               <th>Freelancer</th>
               <th>Message</th>
               <th>Status</th>
-              <th>Action</th>
+              <th colspan="2">Action</th>
             </tr>
           </thead>
 
@@ -27,13 +27,12 @@
                   <td><%= link_to message.sender.name, message %></td>
                   <td><%= message.content %></td>
                   <td><%= message.status %></td>
-                  <td><%= link_to 'Hire', message,
-                                  action: "status",
-                                  id: message.id,
-                                  method: 'post',
+                  <td><%= link_to 'Hire', hire_path(message.id),
                                   data: { confirm: 'Are you sure you want to hire this freelancer?' }%>
                   </td>
                 </tr>
+              <% else %>
+                <tr><td colspan="5">There are currently no applicants</td></tr>
               <% end %>
             <% end %>
           <% else %>

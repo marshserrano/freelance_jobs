@@ -6,41 +6,58 @@ class MessagesController < ApplicationController
   before_action :set_job, only: [:new, :create]
   before_action :set_job_posts, only: [:new, :create]
 
-  before_action :set_sender, only: [:job_invitations, :job_applications]
-  before_action :set_receiver, only: [:job_applicants, :job_invites, :jobs_completed]
-  before_action :set_sender_receiver, only: [:jobs_active]
+  before_action :set_status, only: [:hire, :accept, :decline, :completed]
 
   #employer
   def job_invitations
+    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", current_user.id, @recipient)
   end
 
   def job_applicants
+    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", @sender, current_user.id)
   end
 
   def jobs_active
+    @messages = Message.all.where("sender_id = ? OR recipient_id = ? OR recipient_id = ? OR sender_id = ?",
+                                  current_user.id, @recipient, current_user.id, @sender)
   end
 
   def jobs_completed
+    @messages = Message.all.where("sender_id = ? OR recipient_id = ? OR recipient_id = ? OR sender_id = ?",
+                                  current_user.id, @recipient, current_user.id, @sender)
   end
 
   #freelancer
   def job_applications
+    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", current_user.id, @recipient)
   end
 
   def job_invites
+    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", @sender, current_user.id)
   end
 
-  def status
-    @message = Message.find_by(id: params[:id])
+  def hire
     @message.update(status: "accepted")
-    @job_post = JobPost.where(id: @message.job_post_id)
     @job_post.update(status: "closed")
     redirect_to applicants_path
   end
 
-  # def accept
-  #   @accepted = Message.where(status: 'accepted')
-  # end
+  def accept
+    @message.update(status: "accepted")
+    @job_post.update(status: "closed")
+    redirect_to invites_path
+  end
+
+  def decline
+    @message.update(status: "declined")
+    redirect_to invites_path
+  end
+
+  def completed
+    @message.update(status: "completed")
+    @job_post.update(status: "completed")
+    redirect_to completed_path
+  end
 
   def index
     @messages = Message.all
@@ -80,17 +97,9 @@ class MessagesController < ApplicationController
                                     :recipient_id, :job_post_id)
   end
 
-  def set_sender_receiver
-    @messages = Message.all.where("sender_id = ? OR recipient_id = ? OR recipient_id = ? OR sender_id = ?",
-                                  current_user.id, @recipient, current_user.id, @sender)
-  end
-
-  def set_sender
-    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", current_user.id, @recipient)
-  end
-
-  def set_receiver
-    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", @sender, current_user.id)
+  def set_status
+    @message = Message.find_by(id: params[:id])
+    @job_post = JobPost.where(id: @message.job_post_id)
   end
 
   def set_employer
@@ -98,7 +107,7 @@ class MessagesController < ApplicationController
   end
 
   def set_job_posts
-    @job_post_all = JobPost.all
+    @job_post_all = JobPost.where(status: 'open')
   end
 
   def set_recipient
@@ -106,6 +115,6 @@ class MessagesController < ApplicationController
   end
 
   def set_job
-    @job_post = JobPost.where(user_id: current_user)
+    @job_post = JobPost.where(user_id: current_user, status: 'open')
   end
 end

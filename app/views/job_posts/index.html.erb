@@ -2,24 +2,26 @@
 <div class="row">
   <div class="col-md-8">
     <section class="user_info">
-      <h4>Job Posts (<%= @job_posts.count %>)</h4>
-      <% @job_posts.each do |j| %>
-      <% if j.open? %>
-        <ul class="job_posts">
-          <li id="job_post-<%= j.id %>">
-            <span class="name"><h4><%= j.name %></h4></span>
-            <span class="description">Employer: <%= j.user.name %></span><br>
-            <span class="description">Description: <%= j.description %></span> <br>
-            <span class="skills">Skills Required: <%= j.skills %></span> <br>
-            <span class="budget">Budget: <%= j.budget %></span> per hour <br>
-            <span class="hours_of_work">Hours of work: <%= j.hours_of_work %></span> hours/week <br>
-            <span class="status">Status: <%= j.status %></span> <br>
-            <span class="timestamp">
-              Posted <%= time_ago_in_words(j.created_at) %> ago.
-            </span>
-          </li>
-        </ul>
-      <% end %>
+      <h4>Job Posts</h4>
+      <% if @job_posts.any? %>
+        <% @job_posts.each do |j| %>
+            <ul class="job_posts">
+              <li id="job_post-<%= j.id %>">
+                <span class="name"><h4><%= j.name %></h4></span>
+                <span class="description">Employer: <%= link_to j.user.name, employer_profile_path(j.user.id)%></span><br>
+                <span class="description">Description: <%= j.description %></span> <br>
+                <span class="skills">Skills Required: <%= j.skills %></span> <br>
+                <span class="budget">Budget: <%= j.budget %></span> per hour <br>
+                <span class="hours_of_work">Hours of work: <%= j.hours_of_work %></span> hours/week <br>
+                <span class="status">Status: <%= j.status %></span> <br>
+                <span class="timestamp">
+                  Posted <%= time_ago_in_words(j.created_at) %> ago.
+                </span>
+              </li>
+            </ul>
+        <% end %>
+      <% else %>
+        <h5><i>There are currently no job posts available</i></h5>
       <% end %>
     </section><br><br>
   </div>

@@ -31,8 +31,10 @@
                   <td><%= link_to 'Edit', "#" %></td>
                   <td><%= link_to 'Cancel', "#" %></td>
                 </tr>
-                <% end %>
+              <% else %>
+                <tr><td colspan="5">There are currently no job applications</td></tr>
               <% end %>
+            <% end %>
           <% else %>
             <tr><td colspan="5">There are currently no job applications</td></tr>
           <% end %>

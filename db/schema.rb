@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_20_052013) do
+ActiveRecord::Schema.define(version: 2018_07_26_025027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 2018_07_20_052013) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "recipient_id"
+    t.boolean "accepted", default: false
+    t.boolean "completed", default: false
     t.index ["job_post_id"], name: "index_messages_on_job_post_id"
   end
 
@@ -52,6 +54,7 @@ ActiveRecord::Schema.define(version: 2018_07_20_052013) do
     t.text "summary"
     t.string "skills"
     t.string "location"
+    t.float "rate"
   end
 
   add_foreign_key "job_posts", "users"
