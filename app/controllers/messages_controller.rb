@@ -1,12 +1,55 @@
 class MessagesController < ApplicationController
 
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
-  before_action :set_recipient, only: [:new, :create]
-  before_action :set_employer, only: [:new, :create]
-  before_action :set_job, only: [:new, :create]
-  before_action :set_job_posts, only: [:new, :create]
-
+  before_action :application_limit, only: [:new, :create]
   before_action :set_status, only: [:hire, :accept, :decline, :completed]
+
+  def index
+    @messages = Message.all
+  end
+
+  def show
+    @message = Message.find(params[:id])
+  end
+
+  def new
+    @message = Message.new
+    @job_post_all = JobPost.where(status: 'open')
+    @freelancer = User.where(user_type: 'Freelancer')
+    @job_post = JobPost.where(user_id: current_user, status: 'open')
+    @employer = User.where(user_type: 'Employer')
+  end
+
+  def create
+    @job_post_all = JobPost.where(status: 'open')
+    @freelancer = User.where(user_type: 'Freelancer')
+    @job_post = JobPost.where(user_id: current_user, status: 'open')
+    @employer = User.where(user_type: 'Employer')
+
+    @message = current_user.sent_messages.new(message_params)
+    if current_user.freelancer?
+      @jobpost_user = JobPost.find_by(id: message_params[:job_post_id])
+      @message.recipient_id = @jobpost_user.user_id
+    end
+    if @message.save
+      if current_user.employer?
+        flash[:success] = "Job invitation has been sent!"
+        redirect_to invitations_path
+      else
+        flash[:success] = "Job application has been sent!"
+        redirect_to applications_path
+      end
+    else
+      render 'new'
+    end
+  end
+
+  def destroy
+    @message = Message.find(params[:id])
+    @message.destroy
+    flash[:success] = "Invite was successfully deleted."
+    redirect_to request.referrer
+  end
 
   #employer
   def job_invitations
@@ -59,37 +102,6 @@ class MessagesController < ApplicationController
     redirect_to completed_path
   end
 
-  def index
-    @messages = Message.all
-  end
-
-  def show
-    @message = Message.find(params[:id])
-  end
-
-  def new
-    @message = Message.new
-  end
-
-  def create
-    @message = current_user.sent_messages.new(message_params)
-    if current_user.freelancer?
-      @jobpost_user = JobPost.find_by(id: message_params[:job_post_id])
-      @message.recipient_id = @jobpost_user.user_id
-    end
-    if @message.save
-      if current_user.employer?
-        flash[:success] = "Job invitation has been sent!"
-        redirect_to invites_path
-      else
-        flash[:success] = "Job application has been sent!"
-        redirect_to applications_path
-      end
-    else
-      render 'new'
-    end
-  end
-
   private
 
   def message_params
@@ -97,24 +109,18 @@ class MessagesController < ApplicationController
                                     :recipient_id, :job_post_id)
   end
 
+  def application_limit
+    if current_user.freelancer?
+      @message = Message.where(sender_id: current_user)
+      if @message.count > 2
+        flash[:danger] = "Application should be not more than 3. Please delete one first."
+        redirect_to  applications_path
+      end
+    end
+  end
+
   def set_status
     @message = Message.find_by(id: params[:id])
     @job_post = JobPost.where(id: @message.job_post_id)
-  end
-
-  def set_employer
-    @employer = User.where(user_type: 'Employer')
-  end
-
-  def set_job_posts
-    @job_post_all = JobPost.where(status: 'open')
-  end
-
-  def set_recipient
-    @freelancer = User.where(user_type: 'Freelancer')
-  end
-
-  def set_job
-    @job_post = JobPost.where(user_id: current_user, status: 'open')
   end
 end

@@ -29,10 +29,9 @@
                     <td><%= message.content %></td>
                     <td><%= message.status %></td>
                     <td><%= link_to 'Edit', "#" %></td>
-                    <td><%= link_to 'Cancel', "#" %></td>
+                    <td><%= link_to 'Delete', message, method: :delete,
+                            data: { confirm: 'Are you sure you want to delete this invitation?' } %></td>
                   </tr>
-                <% else %>
-                  <tr><td colspan="5">There are currently no job applications</td></tr>
                 <% end %>
               <% end %>
             <% else %>
