@@ -8,12 +8,12 @@
         <% @freelancers.each do |f| %>
           <ul class="job_posts">
               <li id="user-<%= f.id %>">
-                Name: <%= link_to f.name, freelancer_profile_path(f.id)%><br>
-                Brief Intro: <%= f.brief_intro %><br>
-                Summary: <%= f.summary %><br>
-                Skills: <%= f.skills %><br>
-                Location: <%= f.location %><br>
-                Rate: <%= f.rate %> per hour
+                <strong>Name:</strong> <%= link_to f.name, freelancer_profile_path(f.id)%><br>
+                <strong>Brief Intro:</strong> <%= f.brief_intro %><br>
+                <strong>Summary:</strong> <%= f.summary %><br>
+                <strong>Skills:</strong> <%= f.skills %><br>
+                <strong>Location:</strong> <%= f.location %><br>
+                <strong>Rate:</strong> <%= f.rate %> per hour
               </li>
           </ul>
         <% end %>

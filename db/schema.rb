@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_26_025027) do
+ActiveRecord::Schema.define(version: 2018_07_30_080446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,11 +20,11 @@ ActiveRecord::Schema.define(version: 2018_07_26_025027) do
     t.string "description"
     t.string "skills"
     t.float "budget"
-    t.integer "hours_of_work"
     t.string "status", default: "open"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.float "hours_of_work"
     t.index ["user_id"], name: "index_job_posts_on_user_id"
   end
 
@@ -39,6 +39,17 @@ ActiveRecord::Schema.define(version: 2018_07_26_025027) do
     t.boolean "accepted", default: false
     t.boolean "completed", default: false
     t.index ["job_post_id"], name: "index_messages_on_job_post_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.text "content"
+    t.integer "rating"
+    t.integer "reviewer_id"
+    t.integer "reviewee_id"
+    t.bigint "job_post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_post_id"], name: "index_reviews_on_job_post_id"
   end
 
   create_table "users", force: :cascade do |t|

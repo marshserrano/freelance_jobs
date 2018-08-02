@@ -6,17 +6,18 @@
   <div class="col-md-8">
     <section class="user_info">
         <h4>User Profile</h4><br>
-          Name: <%= current_user.name %><br>
+          <strong>Name:</strong> <%= current_user.name %><br>
+          <strong>Email:</strong> <%= current_user.email %><br>
           <% if current_user.employer? %>
-          Company: <%= current_user.company_name %><br>
-          Job Title: <%= current_user.job_title %><br>
-          Location: <%= current_user.location %>
+          <strong>Company:</strong> <%= current_user.company_name %><br>
+          <strong>Job Title:</strong> <%= current_user.job_title %><br>
+          <strong>Location:</strong> <%= current_user.location %>
           <% else %>
-          Brief Intro: <%= current_user.brief_intro %><br>
-          Summary: <%= current_user.summary %><br>
-          Skills: <%= current_user.skills %><br>
-          Location: <%= current_user.location %><br>
-          Rate: <%= current_user.rate %> per hour
+          <strong>Brief Intro:</strong> <%= current_user.brief_intro %><br>
+          <strong>Summary:</strong> <%= current_user.summary %><br>
+          <strong>Skills:</strong> <%= current_user.skills %><br>
+          <strong>Location:</strong> <%= current_user.location %><br>
+          <strong>Rate:</strong> <%= current_user.rate %> per hour
           <% end %>
     </section><br><br>
     <section class="user_info">

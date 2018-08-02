@@ -229,17 +229,9 @@ input {
     margin-top: 5em;
     padding-top: 0;
   }
-  .description{
+  .description, .skills, .budget, .hours_of_work{
     margin-left: 60px;
-  }
-  .skills{
-    margin-left: 60px;
-  }
-  .budget{
-    margin-left: 60px;
-  }
-  .hours_of_work{
-    margin-left: 60px;
+    display: inline-block;
   }
   .status{
     margin-left: 60px;

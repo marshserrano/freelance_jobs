@@ -3,19 +3,19 @@
   <div class="col-md-8">
     <section class="user_info">
         <h4>User Profile</h4>
-          Name: <%= @user.name %><br>
-          Brief Intro: <%= @user.brief_intro %><br>
-          Summary: <%= @user.summary %><br>
-          Skills: <%= @user.skills %><br>
-          Location: <%= @user.location %><br>
-          Rate: <%= @user.rate %> per hour
+          <strong>Name:</strong> <%= @user.name %><br>
+          <strong>Brief Intro:</strong> <%= @user.brief_intro %><br>
+          <strong>Summary:</strong> <%= @user.summary %><br>
+          <strong>Skills:</strong> <%= @user.skills %><br>
+          <strong>Location:</strong> <%= @user.location %><br>
+          <strong>Rate:</strong> <%= @user.rate %> per hour
     </section><br>
-    <% if @messages.any? %>
     <section class="user_info">
         <h4>Job History</h4>
+    <% if @messages.any? %>
         <%= render 'messages/job_history'  %>
+        <% end %>
     </section><br>
-    <% end %>
     <section class="user_info">
         <h4>Reviews</h4>
     </section><br>

@@ -24,7 +24,13 @@
               <% if message.pending? %>
                 <tr id="message-<%= message.id %>">
                   <td><%= message.job_post.name %></td>
-                  <td><%= message.sender.name %></td>
+                  <% if message.sender.user_type == "Employer" %>
+                  <td><%= link_to message.sender.name,
+                          employer_profile_path(message.sender.id) %></td>
+                  <% else %>
+                  <td><%= link_to message.recipient.name,
+                          employer_profile_path(message.recipient.id) %></td>
+                  <% end %>
                   <td><%= message.content %></td>
                   <td><%= message.status %></td>
                   <td><%= link_to 'Accept', accept_path(message.id),
@@ -35,7 +41,13 @@
               <% elsif message.declined? %>
                 <tr id="message-<%= message.id %>">
                   <td><%= message.job_post.name %></td>
-                  <td><%= message.sender.name %></td>
+                  <% if message.sender.user_type == "Employer" %>
+                  <td><%= link_to message.sender.name,
+                          employer_profile_path(message.sender.id) %></td>
+                  <% else %>
+                  <td><%= link_to message.recipient.name,
+                          employer_profile_path(message.recipient.id) %></td>
+                  <% end %>
                   <td><%= message.content %></td>
                   <td><%= message.status %></td>
                   <td><%= link_to 'Accept', accept_path(message.id),
@@ -44,7 +56,7 @@
                                   data: { confirm: 'Are you sure you want to decline this job?' }%></td>
                 </tr>
               <% else %>
-                <tr><td colspan="5">There are currently no job invitations</td></tr>
+              
               <% end %>
             <% end %>
           <% else %>

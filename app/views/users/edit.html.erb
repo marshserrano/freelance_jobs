@@ -10,6 +10,9 @@
       <%= f.label :name %>
       <%= f.text_field :name, class: 'form-control' %>
 
+      <%= f.label :email %>
+      <%= f.email_field :email, class: 'form-control' %>
+
       <% if current_user.employer? %>
       <%= f.label :company_name %>
       <%= f.text_field :company_name, class: 'form-control' %>
@@ -39,4 +42,4 @@
       <%= f.submit "Edit Profile", class: "btn btn-primary" %>
     <% end %>
   </div>
-</div>
+</div><br><br><br>

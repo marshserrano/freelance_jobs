@@ -24,7 +24,13 @@
               <% if message.pending? %>
                 <tr id="message-<%= message.id %>">
                   <td><%= message.job_post.name %></td>
-                  <td><%= link_to message.sender.name, message %></td>
+                  <% if message.sender.user_type == "Freelancer" %>
+                  <td><%= link_to message.sender.name,
+                          freelancer_profile_path(message.sender.id) %></td>
+                  <% else %>
+                  <td><%= link_to message.recipient.name,
+                          freelancer_profile_path(message.recipient.id) %></td>
+                  <% end %>
                   <td><%= message.content %></td>
                   <td><%= message.status %></td>
                   <td><%= link_to 'Hire', hire_path(message.id),
@@ -32,7 +38,7 @@
                   </td>
                 </tr>
               <% else %>
-                <tr><td colspan="5">There are currently no applicants</td></tr>
+              
               <% end %>
             <% end %>
           <% else %>

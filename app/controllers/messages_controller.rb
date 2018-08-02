@@ -3,6 +3,7 @@ class MessagesController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
   before_action :application_limit, only: [:new, :create]
   before_action :set_status, only: [:hire, :accept, :decline, :completed]
+  before_action :set_messages, only: [:new, :create]
 
   def index
     @messages = Message.all
@@ -14,18 +15,9 @@ class MessagesController < ApplicationController
 
   def new
     @message = Message.new
-    @job_post_all = JobPost.where(status: 'open')
-    @freelancer = User.where(user_type: 'Freelancer')
-    @job_post = JobPost.where(user_id: current_user, status: 'open')
-    @employer = User.where(user_type: 'Employer')
   end
 
   def create
-    @job_post_all = JobPost.where(status: 'open')
-    @freelancer = User.where(user_type: 'Freelancer')
-    @job_post = JobPost.where(user_id: current_user, status: 'open')
-    @employer = User.where(user_type: 'Employer')
-
     @message = current_user.sent_messages.new(message_params)
     if current_user.freelancer?
       @jobpost_user = JobPost.find_by(id: message_params[:job_post_id])
@@ -109,9 +101,16 @@ class MessagesController < ApplicationController
                                     :recipient_id, :job_post_id)
   end
 
+  def set_messages
+    @job_post_all = JobPost.where(status: 'open')
+    @freelancer = User.where(user_type: 'Freelancer')
+    @job_post = JobPost.where(user_id: current_user, status: 'open')
+    @employer = User.where(user_type: 'Employer')
+  end
+
   def application_limit
     if current_user.freelancer?
-      @message = Message.where(sender_id: current_user)
+      @message = Message.where(sender_id: current_user, status: "pending")
       if @message.count > 2
         flash[:danger] = "Application should be not more than 3. Please delete one first."
         redirect_to  applications_path

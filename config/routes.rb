@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
-  get 'employers/index'
-  get 'employers/show'
-  get 'message/new'
-  root   'pages#home'
-  get    'sessions/new'
+  root 'pages#home'
+  # get 'review/new'
+  # get 'employers/index'
+  # get 'employers/show'
+  # get 'message/new'
+  # get 'sessions/new'
+
+  #reviews
+  get   '/reviews',             to: 'reviews#index'
+  get   '/reviews/new',         to: 'reviews#new'
+  get   '/reviews/:id',         to: 'reviews#show'
 
   #messages
   get    '/messages',           to: 'messages#index'
@@ -44,6 +50,7 @@ Rails.application.routes.draw do
   delete '/logout',             to: 'sessions#destroy'
 
   #resources
+  resources :reviews
   resources :messages,          only: [:index, :create, :new, :show, :destroy]
   resources :job_posts,         only: [:new, :create, :edit, :update, :destroy]
   resources :users

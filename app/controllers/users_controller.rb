@@ -13,6 +13,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    # @pass_form = ChangePasswordForm.new(current_user)
   end
 
   def create

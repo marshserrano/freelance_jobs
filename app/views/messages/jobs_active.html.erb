@@ -20,9 +20,11 @@
                 <tr id="message-<%= message.id %>">
                   <td><%= message.job_post.name %></td>
                   <% if message.sender.user_type == "Freelancer" %>
-                  <td><%= message.sender.name%></td>
+                  <td><%= link_to message.sender.name,
+                          freelancer_profile_path(message.sender.id) %></td>
                   <% else %>
-                  <td><%= message.recipient.name %></td>
+                  <td><%= link_to message.recipient.name,
+                          freelancer_profile_path(message.recipient.id) %></td>
                   <% end %>
                   <td><%= message.status = "In progress" %></td>
                   <td><%= link_to 'Finish Job', complete_path(message.id),
@@ -55,9 +57,11 @@
               <tr id="message-<%= message.id %>">
                 <td><%= message.job_post.name %></td>
                 <% if message.sender.user_type == "Employer" %>
-                <td><%= message.sender.name%></td>
+                <td><%= link_to message.sender.name,
+                        employer_profile_path(message.sender.id) %></td>
                 <% else %>
-                <td><%= message.recipient.name %></td>
+                <td><%= link_to message.recipient.name,
+                        employer_profile_path(message.recipient.id) %></td>
                 <% end %>
                 <td><%= message.status = "In progress" %></td>
               </tr>
