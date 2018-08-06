@@ -1,0 +1,23 @@
+<% provide(:title, 'New Job Invitation') %>
+<%= render 'users/index_sidebar' %>
+
+  <div class="col-md-6">
+    <h3>New Job Invitation</h3><br>
+
+    <%= form_for(@invitation) do |f| %>
+      <%= render 'shared/error_messages', object: @invitation %>
+
+      <%= f.text_field :sender_id, value: current_user.id, type: "hidden" %>
+
+      <%= f.label "Freelancer" %>
+      <%= f.select(:recipient_id, @freelancer.collect { |p| [p.name,p.id]}) %>
+
+      <%= f.label "Job Post" %>
+      <%= f.select(:job_post_id, @job_post.collect{ |p| [p.name, p.id]}) %>
+
+      <%= f.label "Message" %>
+      <%= f.text_area :content, class: 'form-control', placeholder: 'Your message for the freelancer' %>
+
+      <%= f.submit 'Send', class: "btn btn-primary" %>
+    <% end %>
+  </div>

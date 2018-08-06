@@ -4,7 +4,7 @@
 <div class="col-md-8">
   <section class="user_info">
     <h4>Job Applications</h4>
-    <%= link_to 'Add New', new_message_path, class:"btn btn-default btn-sm" %>
+    <%= link_to 'Add New', new_application_path, class:"btn btn-default btn-sm" %>
     <br><br>
     <ul class="job_posts">
       <li>
@@ -21,20 +21,20 @@
 
           <tbody>
           <% if @applications.any? %>
-            <% @applications.each do |applications| %>
-              <% if applications.pending? %>
-                <tr id="applications-<%= applications.id %>">
-                  <td><%= applications.job_post.name %></td>
-                  <% if applications.sender.user_type == "Employer" %>
-                  <td><%= link_to applications.sender.name,
-                          employer_profile_path(applications.sender.id) %></td>
+            <% @applications.each do |a| %>
+              <% if a.pending? %>
+                <tr id="a-<%= a.id %>">
+                  <td><%= a.job_post.name %></td>
+                  <% if a.sender.user_type == "Employer" %>
+                  <td><%= link_to a.sender.name,
+                          employer_profile_path(a.sender.id) %></td>
                   <% else %>
-                  <td><%= link_to applications.recipient.name,
-                          employer_profile_path(applications.recipient.id) %></td>
+                  <td><%= link_to a.recipient.name,
+                          employer_profile_path(a.recipient.id) %></td>
                   <% end %>
-                  <td><%= applications.content %></td>
-                  <td><%= applications.status %></td>
-                  <td><%= link_to 'Delete', applications, method: :delete,
+                  <td><%= a.content %></td>
+                  <td><%= a.status %></td>
+                  <td><%= link_to 'Delete', a, method: :delete,
                           data: { confirm: 'Are you sure you want to delete this application?' } %></td>
                 </tr>
               <% else %>

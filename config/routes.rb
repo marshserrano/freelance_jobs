@@ -17,9 +17,7 @@ Rails.application.routes.draw do
     collection do
       resources :invitations
       resources :applications
-      # get '/invitations',   to: 'invitations#index'
       get '/applicants',    to: 'messages#job_applicants'
-      # get '/applications',  to: 'applications#index'
       get '/invites',       to: 'messages#job_invites'
       get '/active',        to: 'messages#jobs_active'
       get '/completed',     to: 'messages#jobs_completed'

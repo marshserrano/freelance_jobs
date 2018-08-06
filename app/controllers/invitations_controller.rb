@@ -3,10 +3,10 @@ class InvitationsController < ApplicationController
     @invitations = Message.where("sender_id = ? OR recipient_id = ?", current_user.id, @recipient)
   end
 
-  def destroy
-    @invitation = Message.find(params[:id])
-    @invitation.destroy
-    flash[:success] = "Application was successfully deleted."
-    redirect_to invitations_path
+  def new
+    @invitation = Message.new
+    @freelancer = User.where(user_type: 'Freelancer')
+    @job_post = JobPost.where(status: 'open')
   end
+
 end
