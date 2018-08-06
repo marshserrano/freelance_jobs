@@ -33,12 +33,12 @@
                   <% end %>
                   <td><%= message.content %></td>
                   <td><%= message.status %></td>
-                  <td><%= link_to 'Hire', hire_path(message.id),
+                  <td><%= link_to 'Hire', hire_message_path(message.id),
                                   data: { confirm: 'Are you sure you want to hire this freelancer?' }%>
                   </td>
                 </tr>
               <% else %>
-              
+
               <% end %>
             <% end %>
           <% else %>

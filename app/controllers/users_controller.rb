@@ -4,7 +4,6 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
 
   def index
-    @job_posts = current_user.job_posts
     @users = User.all
   end
 
@@ -13,7 +12,6 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    # @pass_form = ChangePasswordForm.new(current_user)
   end
 
   def create

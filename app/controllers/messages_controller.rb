@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
 
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
   before_action :application_limit, only: [:new, :create]
-  before_action :set_status, only: [:hire, :accept, :decline, :completed]
+  before_action :set_status, only: [:hire, :accept, :decline, :complete]
   before_action :set_messages, only: [:new, :create]
 
   def index
@@ -26,10 +26,10 @@ class MessagesController < ApplicationController
     if @message.save
       if current_user.employer?
         flash[:success] = "Job invitation has been sent!"
-        redirect_to invitations_path
+        redirect_to invitations_messages_path
       else
         flash[:success] = "Job application has been sent!"
-        redirect_to applications_path
+        redirect_to applications_messages_path
       end
     else
       render 'new'
@@ -44,10 +44,6 @@ class MessagesController < ApplicationController
   end
 
   #employer
-  def job_invitations
-    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", current_user.id, @recipient)
-  end
-
   def job_applicants
     @messages = Message.all.where("sender_id = ? OR recipient_id = ?", @sender, current_user.id)
   end
@@ -63,10 +59,6 @@ class MessagesController < ApplicationController
   end
 
   #freelancer
-  def job_applications
-    @messages = Message.all.where("sender_id = ? OR recipient_id = ?", current_user.id, @recipient)
-  end
-
   def job_invites
     @messages = Message.all.where("sender_id = ? OR recipient_id = ?", @sender, current_user.id)
   end
@@ -74,24 +66,24 @@ class MessagesController < ApplicationController
   def hire
     @message.update(status: "accepted")
     @job_post.update(status: "closed")
-    redirect_to applicants_path
+    redirect_to applicants_messages_path
   end
 
   def accept
     @message.update(status: "accepted")
     @job_post.update(status: "closed")
-    redirect_to invites_path
+    redirect_to invites_messages_path
   end
 
   def decline
     @message.update(status: "declined")
-    redirect_to invites_path
+    redirect_to invites_messages_path
   end
 
-  def completed
+  def complete
     @message.update(status: "completed")
     @job_post.update(status: "completed")
-    redirect_to completed_path
+    redirect_to completed_messages_path
   end
 
   private
@@ -113,7 +105,7 @@ class MessagesController < ApplicationController
       @message = Message.where(sender_id: current_user, status: "pending")
       if @message.count > 2
         flash[:danger] = "Application should be not more than 3. Please delete one first."
-        redirect_to  applications_path
+        redirect_to  applications_messages_path
       end
     end
   end

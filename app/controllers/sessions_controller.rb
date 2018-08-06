@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:session][:password])
       log_in user
       if current_user.employer?
-        redirect_to dashboard_path
+        redirect_to users_path
       else
         redirect_to applications_path
       end

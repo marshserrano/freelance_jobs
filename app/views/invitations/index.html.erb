@@ -4,7 +4,7 @@
 <div class="col-md-8">
   <section class="user_info">
     <h4>Job Invitations</h4>
-    <%= link_to 'Add New', messages_new_path, class:"btn btn-default btn-sm" %>
+    <%= link_to 'Add New', new_message_path, class:"btn btn-default btn-sm" %>
     <br><br>
     <ul class="job_posts">
       <li>
@@ -20,21 +20,21 @@
           </thead>
 
           <tbody>
-            <% if @messages.any? %>
-              <% @messages.each do |message| %>
-                <% if message.pending? %>
+            <% if @invitations.any? %>
+              <% @invitations.each do |invitations| %>
+                <% if invitation.pending? %>
                   <tr id="message-<%= message.id %>">
-                    <td><%= message.job_post.name %></td>
-                    <% if message.sender.user_type == "Freelancer" %>
-                    <td><%= link_to message.sender.name,
-                            freelancer_profile_path(message.sender.id) %></td>
+                    <td><%= invitations.job_post.name %></td>
+                    <% if invitations.sender.user_type == "Freelancer" %>
+                    <td><%= link_to invitations.sender.name,
+                            freelancer_profile_path(invitations.sender.id) %></td>
                     <% else %>
-                    <td><%= link_to message.recipient.name,
-                            freelancer_profile_path(message.recipient.id) %></td>
+                    <td><%= link_to invitations.recipient.name,
+                            freelancer_profile_path(invitations.recipient.id) %></td>
                     <% end %>
-                    <td><%= message.content %></td>
-                    <td><%= message.status %></td>
-                    <td><%= link_to 'Delete', message, method: :delete,
+                    <td><%= invitations.content %></td>
+                    <td><%= invitations.status %></td>
+                    <td><%= link_to 'Delete', invitations, method: :delete,
                             data: { confirm: 'Are you sure you want to delete this invitation?' } %></td>
                   </tr>
                 <% end %>

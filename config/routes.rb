@@ -1,58 +1,30 @@
 Rails.application.routes.draw do
   root 'pages#home'
-  # get 'review/new'
-  # get 'employers/index'
-  # get 'employers/show'
-  # get 'message/new'
-  # get 'sessions/new'
-
-  #reviews
-  get   '/reviews',             to: 'reviews#index'
-  get   '/reviews/new',         to: 'reviews#new'
-  get   '/reviews/:id',         to: 'reviews#show'
-
-  #messages
-  get    '/messages',           to: 'messages#index'
-  get    '/messages/new',       to: 'messages#new'
-  get    '/messages/:id',       to: 'messages#show', as: 'profile'
-  post   '/messages/:id',       to: 'messages#status'
-  get    '/invitations',        to: 'messages#job_invitations'
-  get    '/applicants',         to: 'messages#job_applicants'
-  get    '/applications',       to: 'messages#job_applications'
-  get    '/invites',            to: 'messages#job_invites'
-  get    '/active',             to: 'messages#jobs_active'
-  get    '/completed',          to: 'messages#jobs_completed'
-  get    '/messages/:id/hire',  to: 'messages#hire',          as: 'hire'
-  get    '/messages/:id/accept',    to: 'messages#accept',    as: 'accept'
-  get    '/messages/:id/decline',   to: 'messages#decline',   as: 'decline'
-  get    '/messages/:id/complete',  to: 'messages#completed', as: 'complete'
-
-  #job_posts
-  get    '/job_posts',          to: 'job_posts#index'
-  get    '/job_posts/new',      to: 'job_posts#new'
-  get    '/job_posts/:id',      to: 'job_posts#show'
-
-  #freelancer
-  get    '/freelancers',        to: 'freelancers#index'
-  get    '/freelancers/:id',    to: 'freelancers#show', as: 'freelancer_profile'
-
-  #employer
-  get    '/employers',          to: 'employers#index'
-  get    '/employers/:id',      to: 'employers#show', as: 'employer_profile'
-
-  #users
-  get    '/dashboard',          to: 'users#index'
-  get    '/register',           to: 'users#new'
-
-  #sessions
   get    '/login',              to: 'sessions#new'
   post   '/login',              to: 'sessions#create'
   delete '/logout',             to: 'sessions#destroy'
+  get    '/freelancers',        to: 'freelancers#index'
+  get    '/freelancers/:id',    to: 'freelancers#show', as: 'freelancer_profile'
+  get    '/employers/:id',      to: 'employers#show', as: 'employer_profile'
 
-  #resources
-  resources :reviews
-  resources :messages,          only: [:index, :create, :new, :show, :destroy]
-  resources :job_posts,         only: [:new, :create, :edit, :update, :destroy]
+  resources :messages do
+    member do
+      get '/hire',      to: 'messages#hire'
+      get '/accept',    to: 'messages#accept'
+      get '/decline',   to: 'messages#decline'
+      get '/complete',  to: 'messages#complete'
+    end
+    collection do
+      resources :invitations
+      resources :applications
+      # get '/invitations',   to: 'invitations#index'
+      get '/applicants',    to: 'messages#job_applicants'
+      # get '/applications',  to: 'applications#index'
+      get '/invites',       to: 'messages#job_invites'
+      get '/active',        to: 'messages#jobs_active'
+      get '/completed',     to: 'messages#jobs_completed'
+    end
+  end
+  resources :job_posts
   resources :users
-
 end

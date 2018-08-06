@@ -48,7 +48,9 @@ class JobPostsController < ApplicationController
   private
 
   def job_post_params
-    params.require(:job_post).permit(:name, :description, :skills, :budget, :hours_of_work, :status, :user_id)
+    params.require(:job_post).permit(:name, :description, :skills,
+                                     :budget, :hours_of_work, :status,
+                                     :user_id)
   end
 
   def correct_user
