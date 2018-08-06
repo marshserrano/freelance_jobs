@@ -4,45 +4,82 @@
 <div class="col-md-8">
   <section class="user_info">
     <h4>Job Invitations</h4>
-    <%= link_to 'Add New', new_invitation_path, class:"btn btn-default btn-sm" %>
-    <br><br>
-    <ul class="job_posts">
-      <li>
-        <table>
-          <thead>
-            <tr>
-              <th>Job Name</th>
-              <th>Freelancer</th>
-              <th>Message</th>
-              <th>Status</th>
-              <th colspan="2">Action</th>
-            </tr>
-          </thead>
 
-          <tbody>
-            <% if @invitations.any? %>
-              <% @invitations.each do |i| %>
+    <% if current_user.employer? %>
+      <%= link_to 'Add New', new_invitation_path, class:"btn btn-default btn-sm" %>
+      <br><br>
+      <ul class="job_posts">
+        <li>
+          <table>
+            <thead>
+              <tr>
+                <th>Job Name</th>
+                <th>Freelancer</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th colspan="2">Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% if @invitations.any? %>
+                <% @invitations.each do |i| %>
+                    <tr id="i-<%= i.id %>">
+                      <td><%= i.job_post.name %></td>
+                      <td><%= link_to i.recipient.name,
+                              freelancer_profile_path(i.recipient.id) %></td>
+                      <td><%= i.content %></td>
+                      <td><%= i.status %></td>
+                      <td><%= link_to 'Delete', i, method: :delete,
+                              data: { confirm: 'Are you sure you want to delete this invitation?' } %></td>
+                    </tr>
+                <% end %>
+              <% else %>
+                <tr><td colspan="5">There are currently no job invitations</td></tr>
+              <% end %>
+            </tbody>
+          </table>
+        </li>
+      </ul>
+
+    <% else %>
+
+      <br>
+      <ul class="job_posts">
+        <li>
+          <table>
+            <thead>
+              <tr>
+                <th>Job Name</th>
+                <th>Employer</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th colspan="2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            <% if @invites.any? %>
+              <% @invites.each do |i| %>
                   <tr id="i-<%= i.id %>">
                     <td><%= i.job_post.name %></td>
-                    <% if i.sender.user_type == "Freelancer" %>
                     <td><%= link_to i.sender.name,
-                            freelancer_profile_path(i.sender.id) %></td>
-                    <% else %>
-                    <td><%= link_to i.recipient.name,
-                            freelancer_profile_path(i.recipient.id) %></td>
-                    <% end %>
+                            employer_profile_path(i.sender.id) %></td>
                     <td><%= i.content %></td>
                     <td><%= i.status %></td>
-                    <td><%= link_to 'Delete', i, method: :delete,
-                            data: { confirm: 'Are you sure you want to delete this invitation?' } %></td>
+                    <td><%= link_to 'Accept', accept_message_path(i.id),
+                                    data: { confirm: 'Are you sure you want to accept this job?' }%></td>
+                    <td><%= link_to 'Decline', decline_message_path(i.id),
+                                    data: { confirm: 'Are you sure you want to decline this job?' }%></td>
                   </tr>
               <% end %>
             <% else %>
               <tr><td colspan="5">There are currently no job invitations</td></tr>
             <% end %>
-          </tbody>
-        </table>
-      </li>
-    </ul>
+            </tbody>
+          </table>
+        </li>
+      </ul>
+    <% end %>
+
   </section>
 </div>

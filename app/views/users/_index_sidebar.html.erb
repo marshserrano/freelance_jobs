@@ -16,20 +16,20 @@
         <% if current_user.employer? %>
         <li><%= link_to 'Job Posts', users_path %></li>
         <li><%= link_to 'Job Invitations', invitations_path %></li>
-        <li><%= link_to 'Job Applicants', applicants_messages_path %></li>
+        <li><%= link_to 'Job Applicants', applications_path %></li>
         <% else %>
         <li><%= link_to 'Job Applications', applications_path %></li>
-        <li><%= link_to 'Job Invitations', invites_messages_path %></li>
+        <li><%= link_to 'Job Invitations', invitations_path %></li>
         <% end %>
       </ul>
       <br>
       <h1>Jobs</h1>
       <ul>
         <% if current_user.employer? %>
-        <li><%= link_to 'Work In Progress', active_messages_path %></li>
+        <li><%= link_to 'Work In Progress', active_jobs_path %></li>
         <li><%= link_to 'Completed', completed_messages_path %></li>
         <% else %>
-        <li><%= link_to 'Current Work', active_messages_path %></li>
+        <li><%= link_to 'Current Work', active_jobs_path %></li>
         <li><%= link_to 'Past Jobs', completed_messages_path %></li>
         <% end %>
       </ul>

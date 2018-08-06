@@ -9,17 +9,15 @@ Rails.application.routes.draw do
 
   resources :messages do
     member do
-      get '/hire',      to: 'messages#hire'
-      get '/accept',    to: 'messages#accept'
-      get '/decline',   to: 'messages#decline'
-      get '/complete',  to: 'messages#complete'
+      get '/hire',      to: 'applications#hire'
+      get '/accept',    to: 'invitations#accept'
+      get '/decline',   to: 'invitations#decline'
+      get '/complete',  to: 'active_jobs#complete'
     end
     collection do
       resources :invitations
       resources :applications
-      get '/applicants',    to: 'messages#job_applicants'
-      get '/invites',       to: 'messages#job_invites'
-      get '/active',        to: 'messages#jobs_active'
+      resources :active_jobs
       get '/completed',     to: 'messages#jobs_completed'
     end
   end

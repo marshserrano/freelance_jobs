@@ -3,50 +3,82 @@
 
 <div class="col-md-8">
   <section class="user_info">
-    <h4>Job Applications</h4>
-    <%= link_to 'Add New', new_application_path, class:"btn btn-default btn-sm" %>
-    <br><br>
+    <% if current_user.employer? %>
+    <h4>Applicants</h4>
+    <br>
     <ul class="job_posts">
       <li>
         <table>
           <thead>
             <tr>
               <th>Job Name</th>
-              <th>Employer</th>
+              <th>Freelancer</th>
               <th>Message</th>
               <th>Status</th>
-              <th>Action</th>
+              <th colspan="2">Action</th>
             </tr>
           </thead>
 
           <tbody>
-          <% if @applications.any? %>
-            <% @applications.each do |a| %>
-              <% if a.pending? %>
+          <% if @applicants.any? %>
+            <% @applicants.each do |a| %>
                 <tr id="a-<%= a.id %>">
                   <td><%= a.job_post.name %></td>
-                  <% if a.sender.user_type == "Employer" %>
                   <td><%= link_to a.sender.name,
-                          employer_profile_path(a.sender.id) %></td>
-                  <% else %>
-                  <td><%= link_to a.recipient.name,
-                          employer_profile_path(a.recipient.id) %></td>
-                  <% end %>
+                          freelancer_profile_path(a.sender.id) %></td>
                   <td><%= a.content %></td>
                   <td><%= a.status %></td>
-                  <td><%= link_to 'Delete', a, method: :delete,
-                          data: { confirm: 'Are you sure you want to delete this application?' } %></td>
+                  <td><%= link_to 'Hire', hire_message_path(a.id),
+                                  data: { confirm: 'Are you sure you want to hire this freelancer?' }%>
+                  </td>
                 </tr>
-              <% else %>
-
-              <% end %>
             <% end %>
           <% else %>
-            <tr><td colspan="5">There are currently no job applications</td></tr>
+            <tr><td colspan="5">There are currently no applicants</td></tr>
           <% end %>
           </tbody>
         </table>
       </li>
     </ul>
+
+    <% else %>
+
+      <h4>Job Applications</h4>
+      <%= link_to 'Add New', new_application_path, class:"btn btn-default btn-sm" %>
+      <br><br>
+      <ul class="job_posts">
+        <li>
+          <table>
+            <thead>
+              <tr>
+                <th>Job Name</th>
+                <th>Employer</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            <% if @applications.any? %>
+              <% @applications.each do |a| %>
+                  <tr id="a-<%= a.id %>">
+                    <td><%= a.job_post.name %></td>
+                    <td><%= link_to a.recipient.name,
+                            employer_profile_path(a.recipient.id) %></td>
+                    <td><%= a.content %></td>
+                    <td><%= a.status %></td>
+                    <td><%= link_to 'Delete', a, method: :delete,
+                            data: { confirm: 'Are you sure you want to delete this application?' } %></td>
+                  </tr>
+              <% end %>
+            <% else %>
+              <tr><td colspan="5">There are currently no job applications</td></tr>
+            <% end %>
+            </tbody>
+          </table>
+        </li>
+      </ul>
+    <% end %>
+
   </section>
 </div>
