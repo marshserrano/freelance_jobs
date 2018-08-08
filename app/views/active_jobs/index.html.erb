@@ -16,19 +16,19 @@
           </thead>
           <tbody>
           <% if @active_jobs.any? %>
-            <% @active_jobs.each do |active| %>
-              <% if active.accepted? %>
-                <tr id="active-<%= active.id %>">
-                  <td><%= active.job_post.name %></td>
-                  <% if active.sender.user_type == "Freelancer" %>
-                  <td><%= link_to active.sender.name,
-                          freelancer_profile_path(active.sender.id) %></td>
+            <% @active_jobs.each do |job| %>
+              <% if job.accepted? %>
+                <tr id="job-<%= job.id %>">
+                  <td><%= job.job_post.name %></td>
+                  <% if job.sender.user_type == "Freelancer" %>
+                  <td><%= link_to job.sender.name,
+                          freelancer_profile_path(job.sender.id) %></td>
                   <% else %>
-                  <td><%= link_to active.recipient.name,
-                          freelancer_profile_path(active.recipient.id) %></td>
+                  <td><%= link_to job.recipient.name,
+                          freelancer_profile_path(job.recipient.id) %></td>
                   <% end %>
-                  <td><%= active.status = "In progress" %></td>
-                  <td><%= link_to 'Finish Job', complete_active_job_path(active.id),
+                  <td><%= job.status = "In progress" %></td>
+                  <td><%= link_to 'Finish Job', complete_active_job_path(job.id),
                                   data: { confirm: 'Are you sure you want to complete this job?' }%>
                   </td>
                 </tr>
@@ -55,18 +55,18 @@
         </thead>
         <tbody>
         <% if @active_jobs.any? %>
-          <% @active_jobs.each do |active| %>
-            <% if active.accepted? %>
-              <tr id="active-<%= active.id %>">
-                <td><%= active.job_post.name %></td>
-                <% if active.sender.user_type == "Employer" %>
-                <td><%= link_to active.sender.name,
-                        employer_profile_path(active.sender.id) %></td>
+          <% @active_jobs.each do |job| %>
+            <% if job.accepted? %>
+              <tr id="job-<%= job.id %>">
+                <td><%= job.job_post.name %></td>
+                <% if job.sender.user_type == "Employer" %>
+                <td><%= link_to job.sender.name,
+                        employer_profile_path(job.sender.id) %></td>
                 <% else %>
-                <td><%= link_to active.recipient.name,
-                        employer_profile_path(active.recipient.id) %></td>
+                <td><%= link_to job.recipient.name,
+                        employer_profile_path(job.recipient.id) %></td>
                 <% end %>
-                <td><%= active.status = "In progress" %></td>
+                <td><%= job.status = "In progress" %></td>
               </tr>
             <% end %>
           <% end %>

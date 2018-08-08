@@ -11,6 +11,6 @@ class ActiveJobsController < ApplicationController
     @job_post = JobPost.where(id: @message.job_post_id)
     @message.update(status: "completed")
     @job_post.update(status: "completed")
-    redirect_to completed_jobs_path
+    redirect_to active_jobs_path
   end
 end
