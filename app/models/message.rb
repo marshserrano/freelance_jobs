@@ -14,8 +14,4 @@ class Message < ApplicationRecord
    def completed?
      self.status == 'completed'
    end
-
-   def pending?
-     self.status == 'pending'
-   end
 end

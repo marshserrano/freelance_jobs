@@ -5,18 +5,18 @@
       <h1>
         Freelancers
       </h1>
-        <% @freelancers.each do |f| %>
-          <ul class="job_posts">
-              <li id="user-<%= f.id %>">
-                <strong>Name:</strong> <%= link_to f.name, freelancer_profile_path(f.id)%><br>
-                <strong>Brief Intro:</strong> <%= f.brief_intro %><br>
-                <strong>Summary:</strong> <%= f.summary %><br>
-                <strong>Skills:</strong> <%= f.skills %><br>
-                <strong>Location:</strong> <%= f.location %><br>
-                <strong>Rate:</strong> <%= f.rate %> per hour
-              </li>
-          </ul>
-        <% end %>
+      <% @freelancers.each do |f| %>
+        <ul class="job_posts">
+          <li id="user-<%= f.id %>">
+            <strong>Name:</strong> <%= link_to f.name, freelancer_profile_path(f.id)%><br>
+            <strong>Brief Intro:</strong> <%= f.brief_intro %><br>
+            <strong>Summary:</strong> <%= f.summary %><br>
+            <strong>Skills:</strong> <%= f.skills %><br>
+            <strong>Location:</strong> <%= f.location %><br>
+            <strong>Rate:</strong> <%= f.rate %> per hour
+          </li>
+        </ul>
+      <% end %>
     </section>
   </aside>
 </div>
