@@ -1,20 +1,45 @@
-<% provide(:title, @user.name) %>
+<% provide(:title, @freelancer.name) %>
 <div class="row">
   <div class="col-md-8">
     <section class="user_info">
         <h4>User Profile</h4>
-          <strong>Name:</strong> <%= @user.name %><br>
-          <strong>Brief Intro:</strong> <%= @user.brief_intro %><br>
-          <strong>Summary:</strong> <%= @user.summary %><br>
-          <strong>Skills:</strong> <%= @user.skills %><br>
-          <strong>Location:</strong> <%= @user.location %><br>
-          <strong>Rate:</strong> <%= @user.rate %> per hour
+          <strong>Name:</strong> <%= @freelancer.name %><br>
+          <strong>Brief Intro:</strong> <%= @freelancer.brief_intro %><br>
+          <strong>Summary:</strong> <%= @freelancer.summary %><br>
+          <strong>Skills:</strong> <%= @freelancer.skills %><br>
+          <strong>Location:</strong> <%= @freelancer.location %><br>
+          <strong>Rate:</strong> <%= @freelancer.rate %> per hour
     </section><br>
     <section class="user_info">
         <h4>Job History</h4>
-    <% if @messages.any? %>
-        <%= render 'messages/job_history'  %>
-        <% end %>
+        <table>
+          <thead>
+            <tr>
+              <th>Job Name</th>
+              <th>Employer</th>
+              <th>Outcome</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @completed_jobs.any? %>
+              <% @completed_jobs.each do |job| %>
+                <% if job.completed? %>
+                  <tr id="job-<%= job.id %>">
+                    <td><%= job.job_post.name %></td>
+                    <% if job.sender.user_type == "Employer" %>
+                    <td><%= link_to job.sender.name,
+                            employer_profile_path(job.sender.id) %></td>
+                    <% else %>
+                    <td><%= link_to job.recipient.name,
+                            employer_profile_path(job.sender.id) %></td>
+                    <% end %>
+                    <td><%= job.status %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
     </section><br>
     <section class="user_info">
         <h4>Reviews</h4>

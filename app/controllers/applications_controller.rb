@@ -2,8 +2,10 @@ class ApplicationsController < ApplicationController
   before_action :application_limit, only: [:new]
 
   def index
-    @applications = Message.where("sender_id = ? OR recipient_id = ?", current_user.id, @recipient)
-    @applicants = Message.where("sender_id = ? OR recipient_id = ?", @sender, current_user.id)
+    @applications = Message.where("sender_id = ? OR recipient_id = ?",
+                                   current_user.id, @recipient)
+    @applicants = Message.where("sender_id = ? OR recipient_id = ?",
+                                 @sender, current_user.id)
   end
 
   def new
