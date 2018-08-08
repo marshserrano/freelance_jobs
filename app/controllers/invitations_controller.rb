@@ -1,4 +1,5 @@
 class InvitationsController < ApplicationController
+
   def index
     @invitations = Message.where("sender_id = ? OR recipient_id = ?", current_user.id, @recipient)
     @invites = Message.where("sender_id = ? OR recipient_id = ?", @sender, current_user.id)
@@ -11,16 +12,16 @@ class InvitationsController < ApplicationController
   end
 
   def accept
-    @message = Message.find_by(id: params[:id])
-    @job_post = JobPost.where(id: @message.job_post_id)
-    @message.update(status: "accepted")
+    @invitation = Message.find_by(id: params[:id])
+    @job_post = JobPost.where(id: @invitation.job_post_id)
+    @invitation.update(status: "accepted")
     @job_post.update(status: "closed")
     redirect_to invitations_path
   end
 
   def decline
-    @message = Message.find_by(id: params[:id])
-    @message.update(status: "declined")
+    @invitation = Message.find_by(id: params[:id])
+    @invitation.update(status: "declined")
     redirect_to invitations_path
   end
 end

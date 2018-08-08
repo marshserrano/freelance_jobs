@@ -1,7 +1,5 @@
 class JobPostsController < ApplicationController
-
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
-  before_action :correct_user,   only: :destroy
 
   def index
     @job_posts = JobPost.where(status: "open")
@@ -51,10 +49,5 @@ class JobPostsController < ApplicationController
     params.require(:job_post).permit(:name, :description, :skills,
                                      :budget, :hours_of_work, :status,
                                      :user_id)
-  end
-
-  def correct_user
-    @job_post = current_user.job_posts.find_by(id: params[:id])
-    redirect_to dashboard_path if @job_post.nil?
   end
 end
