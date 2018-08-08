@@ -28,7 +28,7 @@
                           freelancer_profile_path(active.recipient.id) %></td>
                   <% end %>
                   <td><%= active.status = "In progress" %></td>
-                  <td><%= link_to 'Finish Job', complete_message_path(active.id),
+                  <td><%= link_to 'Finish Job', complete_active_job_path(active.id),
                                   data: { confirm: 'Are you sure you want to complete this job?' }%>
                   </td>
                 </tr>

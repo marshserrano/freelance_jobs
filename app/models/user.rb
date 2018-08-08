@@ -4,8 +4,6 @@ class User < ApplicationRecord
   has_many :messages, class_name: "Message", foreign_key: "recipient_id"
   has_many :sent_messages, class_name: "Message", foreign_key: "sender_id"
   has_many :job_posts, dependent: :destroy
-  #dependent: :destroy - for the dependent microposts to be destroyed
-  #when the user itself is destroyed
   before_update :check_password
 
   validates :user_type, presence: true

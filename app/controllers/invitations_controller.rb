@@ -20,7 +20,6 @@ class InvitationsController < ApplicationController
 
   def decline
     @message = Message.find_by(id: params[:id])
-    @job_post = JobPost.where(id: @message.job_post_id)
     @message.update(status: "declined")
     redirect_to invitations_path
   end

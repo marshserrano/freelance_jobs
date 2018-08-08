@@ -1,5 +1,4 @@
 class ApplicationsController < ApplicationController
-
   before_action :application_limit, only: [:new]
 
   def index
@@ -12,7 +11,7 @@ class ApplicationsController < ApplicationController
     @job_post = JobPost.where(status: 'open')
   end
 
-  def hire
+  def accept
     @message = Message.find_by(id: params[:id])
     @job_post = JobPost.where(id: @message.job_post_id)
     @message.update(status: "accepted")

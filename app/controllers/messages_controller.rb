@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
 
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
+  before_action :logged_in_user, only: [:create, :destroy]
 
   def create
     @message = current_user.sent_messages.new(message_params)
@@ -31,11 +31,6 @@ class MessagesController < ApplicationController
       flash[:success] = "Job application was successfully deleted."
       redirect_to applications_path
     end
-  end
-
-  def jobs_completed
-    @messages = Message.all.where("sender_id = ? OR recipient_id = ? OR recipient_id = ? OR sender_id = ?",
-                                  current_user.id, @recipient, current_user.id, @sender)
   end
 
   private

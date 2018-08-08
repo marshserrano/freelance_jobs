@@ -8,17 +8,24 @@ Rails.application.routes.draw do
   get    '/employers/:id',      to: 'employers#show', as: 'employer_profile'
 
   resources :messages do
-    member do
-      get '/hire',      to: 'applications#hire'
-      get '/accept',    to: 'invitations#accept'
-      get '/decline',   to: 'invitations#decline'
-      get '/complete',  to: 'active_jobs#complete'
-    end
     collection do
-      resources :invitations
-      resources :applications
-      resources :active_jobs
-      get '/completed',     to: 'messages#jobs_completed'
+      resources :invitations, shallow: true do
+        member do
+          get '/accept',    to: 'invitations#accept'
+          get '/decline',   to: 'invitations#decline'
+        end
+      end
+      resources :applications, shallow: true do
+        member do
+          get '/accept',      to: 'applications#accept'
+        end
+      end
+      resources :active_jobs, shallow: true do
+        member do
+          get '/complete',  to: 'active_jobs#complete'
+        end
+      end
+      resources :completed_jobs
     end
   end
   resources :job_posts
