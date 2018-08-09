@@ -1,11 +1,8 @@
 class ApplicationsController < ApplicationController
-  before_action :application_limit, only: [:new]
 
   def index
-    @applications = Message.where("sender_id = ? OR recipient_id = ?",
-                                   current_user.id, @recipient)
-    @applicants = Message.where("sender_id = ? OR recipient_id = ?",
-                                 @sender, current_user.id)
+    @applications = Message.sender_or_reciever(current_user.id, @recipient)
+    @applicants = Message.sender_or_reciever(@sender, current_user.id)
   end
 
   def new
@@ -21,15 +18,10 @@ class ApplicationsController < ApplicationController
     redirect_to applications_path
   end
 
-  private
-
-  def application_limit
-    if current_user.freelancer?
-      @application = Message.where(sender_id: current_user, status: "pending")
-      if @application.count > 2
-        flash[:danger] = "Application should be not more than 3. Please delete one first."
-        redirect_to applications_path
-      end
-    end
+  def destroy
+    @application = Message.find_by(id: params[:id])
+    @application.destroy
+      flash[:success] = "Job application was successfully deleted."
+      redirect_to applications_path
   end
 end

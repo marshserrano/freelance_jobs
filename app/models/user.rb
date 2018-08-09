@@ -1,9 +1,9 @@
 class User < ApplicationRecord
-  has_many :reviews, class_name: "Review", foreign_key: "reviewee_id"
-  has_many :sent_reviews, class_name: "Review", foreign_key: "reviewer_id"
   has_many :messages, class_name: "Message", foreign_key: "recipient_id"
   has_many :sent_messages, class_name: "Message", foreign_key: "sender_id"
   has_many :job_posts, dependent: :destroy
+  has_many :applications, class_name: "Message", foreign_key: "sender_id"
+
   before_update :check_password
 
   validates :user_type, presence: true
@@ -12,6 +12,10 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, on: :create
   validates :password_confirmation, presence: true, on: :create
+
+  def application_limit_reached?
+    applications.pending.count > 2
+  end
 
   def employer?
     self.user_type == 'Employer'

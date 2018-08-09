@@ -3,6 +3,14 @@ class Message < ApplicationRecord
    belongs_to :recipient, class_name: "User", foreign_key: "recipient_id"
    belongs_to :sender, class_name: "User", foreign_key: "sender_id"
 
+   scope :pending, -> do
+     where(status: "pending")
+   end
+
+   scope :sender_or_reciever, -> (sender_id, recipient_id) do
+     where("sender_id = ? OR recipient_id = ?", sender_id, recipient_id)
+   end
+
    def accepted?
      self.status == 'accepted'
    end

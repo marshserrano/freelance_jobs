@@ -1,8 +1,9 @@
 class InvitationsController < ApplicationController
+  before_action :set_invitation, only: [:accept, :decline, :destroy]
 
   def index
-    @invitations = Message.where("sender_id = ? OR recipient_id = ?", current_user.id, @recipient)
-    @invites = Message.where("sender_id = ? OR recipient_id = ?", @sender, current_user.id)
+    @invitations = Message.sender_or_reciever(current_user.id, @recipient)
+    @invites = Message.sender_or_reciever(@sender, current_user.id)
   end
 
   def new
@@ -12,7 +13,6 @@ class InvitationsController < ApplicationController
   end
 
   def accept
-    @invitation = Message.find_by(id: params[:id])
     @job_post = JobPost.where(id: @invitation.job_post_id)
     @invitation.update(status: "accepted")
     @job_post.update(status: "closed")
@@ -20,8 +20,19 @@ class InvitationsController < ApplicationController
   end
 
   def decline
-    @invitation = Message.find_by(id: params[:id])
     @invitation.update(status: "declined")
     redirect_to invitations_path
+  end
+
+  def destroy
+    @invitation.destroy
+      flash[:success] = "Job invitation was successfully deleted."
+      redirect_to invitations_path
+  end
+
+  private
+
+  def set_invitation
+    @invitation = Message.find_by(id: params[:id])
   end
 end
