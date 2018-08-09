@@ -24,4 +24,11 @@ class InvitationsController < ApplicationController
     @invitation.update(status: "declined")
     redirect_to invitations_path
   end
+
+  def destroy
+    @invitation = Message.find(params[:id])
+    @invitation.destroy
+      flash[:success] = "Job invitation was successfully deleted."
+      redirect_to invitations_path
+  end
 end

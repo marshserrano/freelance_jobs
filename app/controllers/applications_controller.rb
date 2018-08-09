@@ -21,6 +21,13 @@ class ApplicationsController < ApplicationController
     redirect_to applications_path
   end
 
+  def destroy
+    @application = Message.find(params[:id])
+    @application.destroy
+      flash[:success] = "Job application was successfully deleted."
+      redirect_to applications_path
+  end
+
   private
 
   def application_limit

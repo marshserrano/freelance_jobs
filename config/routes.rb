@@ -7,27 +7,26 @@ Rails.application.routes.draw do
   get    '/freelancers/:id',    to: 'freelancers#show', as: 'freelancer_profile'
   get    '/employers/:id',      to: 'employers#show', as: 'employer_profile'
 
-  resources :messages do
-    collection do
-      resources :invitations, shallow: true do
-        member do
-          get '/accept',    to: 'invitations#accept'
-          get '/decline',   to: 'invitations#decline'
-        end
-      end
-      resources :applications, shallow: true do
-        member do
-          get '/accept',      to: 'applications#accept'
-        end
-      end
-      resources :active_jobs, shallow: true do
-        member do
-          get '/complete',  to: 'active_jobs#complete'
-        end
-      end
-      resources :completed_jobs
+  resources :invitations, shallow: true do
+    member do
+      get '/accept',    to: 'invitations#accept'
+      get '/decline',   to: 'invitations#decline'
+      get '/delete',    to: 'invitations#destroy'
     end
   end
+  resources :applications, shallow: true do
+    member do
+      get '/accept',      to: 'applications#accept'
+      get '/delete',    to: 'applications#destroy'
+    end
+  end
+  resources :active_jobs, shallow: true do
+    member do
+      get '/complete',  to: 'active_jobs#complete'
+    end
+  end
+  resources :completed_jobs
   resources :job_posts
   resources :users
+  resources :messages
 end

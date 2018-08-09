@@ -21,18 +21,6 @@ class MessagesController < ApplicationController
     end
   end
 
-  def destroy
-    @message = Message.find(params[:id])
-    @message.destroy
-    if current_user.employer?
-      flash[:success] = "Job invitation was successfully deleted."
-      redirect_to invitations_path
-    else
-      flash[:success] = "Job application was successfully deleted."
-      redirect_to applications_path
-    end
-  end
-
   private
 
   def message_params
