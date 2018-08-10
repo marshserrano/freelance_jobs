@@ -2,8 +2,8 @@ class InvitationsController < ApplicationController
   before_action :set_invitation, only: [:accept, :decline, :destroy]
 
   def index
-    @invitations = Message.sender_or_reciever(current_user.id, @recipient)
-    @invites = Message.sender_or_reciever(@sender, current_user.id)
+    @invitations = current_user.sent_messages
+    @invites = current_user.messages
   end
 
   def new

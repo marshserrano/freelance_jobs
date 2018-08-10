@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'pages#home'
   get    '/login',              to: 'sessions#new'
   post   '/login',              to: 'sessions#create'
-  get    '/logout',             to: 'sessions#destroy'
+  delete '/logout',             to: 'sessions#destroy'
   get    '/freelancers',        to: 'freelancers#index'
   get    '/freelancers/:id',    to: 'freelancers#show', as: 'freelancer_profile'
   get    '/employers/:id',      to: 'employers#show', as: 'employer_profile'
@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   end
   resources :applications do
     member do
-      get '/accept',      to: 'applications#accept'
+      get '/accept',    to: 'applications#accept'
       get '/delete',    to: 'applications#destroy'
     end
   end

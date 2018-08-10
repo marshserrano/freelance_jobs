@@ -1,8 +1,8 @@
 class ApplicationsController < ApplicationController
 
   def index
-    @applications = Message.sender_or_reciever(current_user.id, @recipient)
-    @applicants = Message.sender_or_reciever(@sender, current_user.id)
+    @applications = current_user.applications
+    @applicants = current_user.messages
   end
 
   def new
