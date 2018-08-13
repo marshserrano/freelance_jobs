@@ -1,8 +1,12 @@
 class User < ApplicationRecord
   has_many :messages, class_name: "Message", foreign_key: "recipient_id"
   has_many :sent_messages, class_name: "Message", foreign_key: "sender_id"
-  has_many :job_posts, dependent: :destroy
-  has_many :applications, class_name: "Message", foreign_key: "sender_id"
+  has_many :job_applications, class_name: "JobApplication", foreign_key: "sender_id"
+  has_many :posts, dependent: :destroy
+  has_many :reviews, dependent: :destroy
+  has_many :invites
+  has_many :skills
+  has_one  :address
 
   # before_update :check_password
 

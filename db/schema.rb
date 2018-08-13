@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 2018_07_30_080446) do
-=======
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -14,7 +11,6 @@ ActiveRecord::Schema.define(version: 2018_07_30_080446) do
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2018_08_13_070339) do
->>>>>>> database-restructuring
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"

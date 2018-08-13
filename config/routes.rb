@@ -3,21 +3,22 @@ Rails.application.routes.draw do
   get    '/login',              to: 'sessions#new'
   post   '/login',              to: 'sessions#create'
   delete '/logout',             to: 'sessions#destroy'
-  get    '/freelancers',        to: 'freelancers#index'
-  get    '/freelancers/:id',    to: 'freelancers#show', as: 'freelancer_profile'
-  get    '/employers/:id',      to: 'employers#show', as: 'employer_profile'
 
-  resources :invitations do
+  resources :users do
+    resources :addresses
+    resources :skills
+  end
+  resources :invites do
     member do
-      get '/accept',    to: 'invitations#accept'
-      get '/decline',   to: 'invitations#decline'
-      get '/delete',    to: 'invitations#destroy'
+      get '/accept',    to: 'invites#accept'
+      get '/decline',   to: 'invites#decline'
+      get '/delete',    to: 'invites#destroy'
     end
   end
-  resources :applications do
+  resources :job_applications do
     member do
-      get '/accept',    to: 'applications#accept'
-      get '/delete',    to: 'applications#destroy'
+      get '/accept',    to: 'job_applications#accept'
+      get '/delete',    to: 'job_applications#destroy'
     end
   end
   resources :active_jobs do
@@ -26,7 +27,10 @@ Rails.application.routes.draw do
     end
   end
   resources :completed_jobs
-  resources :job_posts
-  resources :users
-  resources :messages
+  resources :posts
+  resources :reviews
+
+  get    '/freelancers',        to: 'freelancers#index'
+  get    '/freelancers/:id',    to: 'freelancers#show', as: 'freelancer_profile'
+  get    '/employers/:id',      to: 'employers#show', as: 'employer_profile'
 end
