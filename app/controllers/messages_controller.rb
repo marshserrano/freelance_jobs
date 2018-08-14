@@ -31,6 +31,6 @@ class MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:content, :status, :sender_id,
-                                    :recipient_id, :job_post_id)
+                                    :recipient_id, :post_id)
   end
 end

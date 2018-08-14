@@ -1,14 +1,13 @@
 class User < ApplicationRecord
-  has_many :messages, class_name: "Message", foreign_key: "recipient_id"
-  has_many :sent_messages, class_name: "Message", foreign_key: "sender_id"
-  has_many :job_applications, class_name: "JobApplication", foreign_key: "sender_id"
+  has_many :sent_applications, class_name: "JobApplication", foreign_key: "sender_id"
+  has_many :job_applications, class_name: "JobApplication", foreign_key: "recipient_id"
+  has_many :sent_invites, class_name: "Invite", foreign_key: "sender_id"
+  has_many :invites, class_name: "Invite", foreign_key: "recipient_id"
+  has_many :sent_reviews, class_name: "Review", foreign_key: "reviewer_id"
+  has_many :reviews, class_name: "Review", foreign_key: "reviewee_id"
   has_many :posts, dependent: :destroy
-  has_many :reviews, dependent: :destroy
-  has_many :invites
   has_many :skills
   has_one  :address
-
-  # before_update :check_password
 
   validates :user_type, presence: true
   validates :name, presence: true
@@ -17,27 +16,17 @@ class User < ApplicationRecord
   validates :password, presence: true, on: :create
   validates :password_confirmation, presence: true, on: :create
 
-  scope :freelancer, -> { where(user_type: "Freelancer") }
+  scope :freelancer, -> { where(user_type: "freelancer").order(name: :asc) }
 
-  def application_limit_reached?
-    applications.pending.count > 2
+  def sent_application_limit_reached?
+    sent_applications.pending.count > 2
   end
 
   def employer?
-    self.user_type == 'Employer'
+    self.user_type == 'employer'
   end
 
   def freelancer?
-    self.user_type == 'Freelancer'
+    self.user_type == 'freelancer'
   end
-
-  # private
-  #
-  #   def check_password
-  #     is_ok = self.password.nil? || self.password.empty? || self.password.length >= 6
-  #     self.errors[:password] << "Password is too short (minimum is 6 characters)" unless is_ok
-  #     is_ok
-  #     # The callback returns a Boolean value indicating success;
-  #     # if it fails, the save is blocked
-  #   end
 end

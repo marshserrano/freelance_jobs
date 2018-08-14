@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
       if current_user.employer?
         redirect_to users_path
       else
-        redirect_to applications_path
+        redirect_to job_applications_path
       end
     else
       flash.now[:danger] = 'Invalid email/password'

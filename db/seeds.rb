@@ -2,7 +2,7 @@ User.create!(name: "Employer Marsh",
              email: "employermarsh@gmail.com",
              password: "employermarsh",
              password_confirmation: "employermarsh",
-             user_type: "Employer",
+             user_type: "employer",
              company: "MyCompany",
              job_title: "CEO")
 

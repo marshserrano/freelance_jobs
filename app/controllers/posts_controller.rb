@@ -16,8 +16,8 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
-      flash[:success] = "Job post has been created!"
-      redirect_to dashboard_path
+      flash[:success] = "Job post created"
+      redirect_to users_path
     else
       render 'new'
     end
@@ -30,17 +30,18 @@ class PostsController < ApplicationController
   def update
     @post = current_user.posts.find_by(id: params[:id])
     if @post.update_attributes(post_params)
-      flash[:success] = "Job post successfully updated!"
-      redirect_to dashboard_path
+      flash[:success] = "Job post updated"
+      redirect_to users_path
     else
       render 'edit'
     end
   end
 
   def destroy
+    @post = current_user.posts.find_by(id: params[:id])
     @post.destroy
     flash[:success] = "Job post deleted"
-    redirect_to request.referrer || dashboard_path
+    redirect_to request.referrer || users_path
   end
 
   private

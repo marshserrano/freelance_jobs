@@ -1,15 +1,15 @@
-<li id="job_post-<%= job_post.id %>">
-  <span class="name"><h4><%= job_post.name %></h4></span>
-  <span class="description">Description: <%= job_post.description %></span> <br>
-  <span class="skills">Skills Required: <%= job_post.skills %></span> <br>
-  <span class="budget">Budget: <%= job_post.budget %></span> per hour <br>
-  <span class="hours_of_work">Hours of work: <%= job_post.hours_of_work %></span> hours/week <br>
-  <span class="status">Status: <%= job_post.status %></span> <br>
+<li id="post-<%= post.id %>">
+  <span class="name"><h4><%= post.name %></h4></span>
+  <span class="description">Description: <%= post.description %></span> <br>
+  <span class="skills">Skills Required: <%= post.skills %></span> <br>
+  <span class="budget">Budget: <%= post.budget %></span> per hour <br>
+  <span class="hours_of_work">Hours of work: <%= post.hours_of_work %></span> hours/week <br>
+  <span class="status">Status: <%= post.status %></span> <br>
   <span class="timestamp">
-    Posted <%= time_ago_in_words(job_post.created_at) %> ago.
+    Posted <%= time_ago_in_words(post.created_at) %> ago.
   </span>
-  <%= link_to 'Edit', edit_job_post_path(job_post), class:"btn btn-primary btn-sm" %>
-  <%= link_to 'Delete', job_post, method: :delete, data:
+  <%= link_to 'Edit', edit_post_path(post), class:"btn btn-primary btn-sm" %>
+  <%= link_to 'Delete', post, method: :delete, data:
                 { confirm: 'Are you sure you want to delete this job post?' },
                   class:"btn btn-danger btn-sm" %>
 </li>

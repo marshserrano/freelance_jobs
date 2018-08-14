@@ -12,13 +12,13 @@ Rails.application.routes.draw do
     member do
       get '/accept',    to: 'invites#accept'
       get '/decline',   to: 'invites#decline'
-      get '/delete',    to: 'invites#destroy'
+      # get '/delete',    to: 'invites#destroy'
     end
   end
   resources :job_applications do
     member do
       get '/accept',    to: 'job_applications#accept'
-      get '/delete',    to: 'job_applications#destroy'
+      # get '/delete',    to: 'job_applications#destroy'
     end
   end
   resources :active_jobs do

@@ -7,7 +7,7 @@
       <%= render 'shared/error_messages', object: @user %>
 
       <%= f.label "Register as:" %>
-      <%= f.select(:user_type, [['Employer', "Employer"], ['Freelancer', "Freelancer"]], class: 'form-control') %>
+      <%= f.select(:user_type, [['Employer', "employer"], ['Freelancer', "freelancer"]], class: 'form-control') %>
 
       <%= f.label :name %>
       <%= f.text_field :name, class: 'form-control' %>

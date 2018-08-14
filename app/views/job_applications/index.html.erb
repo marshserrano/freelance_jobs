@@ -20,17 +20,17 @@
           </thead>
 
           <tbody>
-          <% if @applicants.any? %>
-            <% @applicants.each do |a| %>
+          <% if current_user.job_applications.any? %>
+            <% current_user.job_applications.each do |a| %>
               <% if a.status == "accepted" || a.status == "completed" %>
               <% else %>
                 <tr id="a-<%= a.id %>">
-                  <td><%= a.job_post.name %></td>
+                  <td><%= a.post.name %></td>
                   <td><%= link_to a.sender.name,
                           freelancer_profile_path(a.sender.id) %></td>
                   <td><%= a.content %></td>
-                  <td><%= a.status %></td>
-                  <td><%= link_to 'Hire', accept_application_path(a.id),
+                  <td><%= a.status.capitalize %></td>
+                  <td><%= link_to 'Hire', accept_job_application_path(a.id),
                                   data: { confirm: 'Are you sure you want to hire this freelancer?' }%>
                   </td>
                 </tr>
@@ -47,7 +47,7 @@
     <% else %>
 
       <h4>Job Applications</h4>
-      <%= link_to 'Add New', new_application_path, class:"btn btn-default btn-sm" %>
+      <%= link_to 'Add New', new_job_application_path, class:"btn btn-default btn-sm" %>
       <br><br>
       <ul class="job_posts">
         <li>
@@ -62,18 +62,18 @@
               </tr>
             </thead>
             <tbody>
-            <% if @applications.any? %>
-              <% @applications.each do |a| %>
+            <% if current_user.sent_applications.any? %>
+              <% current_user.sent_applications.each do |a| %>
                 <% if a.status == "accepted" || a.status == "completed" %>
                 <% else %>
                   <tr id="a-<%= a.id %>">
-                    <td><%= a.job_post.name %></td>
+                    <td><%= a.post.name %></td>
                     <td><%= link_to a.recipient.name,
                             employer_profile_path(a.recipient.id) %></td>
                     <td><%= a.content %></td>
-                    <td><%= a.status %></td>
-                    <td><%= link_to 'Delete', delete_application_path(a.id),
-                            data: { confirm: 'Are you sure you want to delete this application?' } %></td>
+                    <td><%= a.status.capitalize %></td>
+                    <td><%= link_to 'Delete', a, method: :delete, data:
+                                  { confirm: 'Are you sure you want to delete this application?' } %></td>
                   </tr>
                 <% end %>
               <% end %>

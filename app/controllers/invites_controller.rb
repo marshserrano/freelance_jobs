@@ -1,38 +1,50 @@
 class InvitesController < ApplicationController
-  before_action :set_invite, only: [:accept, :decline, :destroy]
 
   def index
-    @invites = current_user.sent_messages
-    @invites = current_user.messages
+    @invites = Invite.all
   end
 
   def new
-    @invites = Message.new
-    @freelancer = User.where(user_type: 'Freelancer').order(name: :asc)
-    @post = current_user.posts.where(status: 'open')
+    @invite = Invite.new
+  end
+
+  def create
+    @invite = current_user.sent_invites.new(invite_params)
+    if @invite.save
+      flash[:success] = "Invite sent"
+      redirect_to invites_path
+    else
+      render 'new'
+    end
   end
 
   def accept
-    @post = Post.where(id: @invites.post_id)
-    @invites.update(status: "accepted")
-    @post.update(status: "closed")
-    redirect_to invitations_path
+    @invite = Invite.find_by(id: params[:id])
+    @post = Post.where(id: @invite.post_id)
+    @invite.update(status: 1)
+    @post.update(status: 1)
+    flash[:success] = "Invite accepted."
+    redirect_to invites_path
   end
 
   def decline
-    @invites.update(status: "declined")
-    redirect_to invitations_path
+    @invite = Invite.find_by(id: params[:id])
+    @invite.update(status: 2)
+    flash[:success] = "Invite declined."
+    redirect_to invites_path
   end
 
   def destroy
-    @invites.destroy
-      flash[:success] = "Job invitation was successfully deleted."
-      redirect_to invitations_path
+    @invite = Invite.find_by(id: params[:id])
+    @invite.destroy
+      flash[:success] = "Invite deleted."
+      redirect_to invites_path
   end
 
   private
 
-  def set_invite
-    @invitation = Message.find_by(id: params[:id])
+  def invite_params
+    params.require(:invite).permit(:content, :status, :sender_id,
+                                    :recipient_id, :post_id)
   end
 end

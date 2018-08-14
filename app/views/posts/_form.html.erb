@@ -1,5 +1,5 @@
-<%= form_for(@job_post) do |f| %>
-  <%= render 'shared/jobpost_error_messages' %>
+<%= form_for(@post) do |f| %>
+  <%= render 'shared/error_messages', object: @post %>
 
   <%= f.label "Choose a name for your job post" %>
   <%= f.text_field :name, class: 'form-control', placeholder: 'name' %>
