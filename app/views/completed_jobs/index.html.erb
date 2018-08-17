@@ -18,8 +18,8 @@
             <% @completed_jobs.each do |job| %>
               <% if job.completed? %>
                 <tr id="job-<%= job.id %>">
-                  <td><%= job.job_post.name %></td>
-                  <% if job.sender.user_type == "Freelancer" %>
+                  <td><%= job.post.name %></td>
+                  <% if job.sender.user_type == "freelancer" %>
                   <td><%= link_to job.sender.name,
                           freelancer_profile_path(job.sender.id) %></td>
                   <% else %>
@@ -54,8 +54,8 @@
             <% @completed_jobs.each do |job| %>
               <% if job.completed? %>
                 <tr id="job-<%= job.id %>">
-                  <td><%= job.job_post.name %></td>
-                  <% if job.sender.user_type == "Employer" %>
+                  <td><%= job.post.name %></td>
+                  <% if job.sender.user_type == "employer" %>
                   <td><%= link_to job.sender.name,
                           employer_profile_path(job.sender.id) %></td>
                   <% else %>

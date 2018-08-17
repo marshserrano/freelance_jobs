@@ -1,5 +1,5 @@
 class JobApplication < ApplicationRecord
-  enum status: [:pending, :accepted, :declined]
+  enum status: [:pending, :accepted, :declined, :completed]
 
   belongs_to :post, class_name: "Post", foreign_key: "post_id"
   belongs_to :recipient, class_name: "User", foreign_key: "recipient_id"

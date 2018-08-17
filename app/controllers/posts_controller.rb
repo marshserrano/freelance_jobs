@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
 
   def index
-    @posts = Post.where(status: "open")
+    @posts = Post.all
   end
 
   def show

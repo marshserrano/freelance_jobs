@@ -3,8 +3,8 @@
   <div class="col-md-8">
     <section class="user_info">
       <h4>Job Posts</h4>
-      <% if @job_posts.any? %>
-        <% @job_posts.each do |j| %>
+      <% if Post.open.any? %>
+        <% Post.open.each do |j| %>
             <ul class="job_posts">
               <li id="job_post-<%= j.id %>">
                 <span class="name"><h4><%= j.name %></h4></span>

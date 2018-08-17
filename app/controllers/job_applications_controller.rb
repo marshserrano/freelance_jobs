@@ -27,8 +27,8 @@ class JobApplicationsController < ApplicationController
   def accept
     @job_application = JobApplication.find_by(id: params[:id])
     @post = Post.where(id: @job_application.post_id)
-    @job_application.update(status: 1)
-    @post.update(status: 1)
+    @job_application.accepted!
+    @post.closed!
     flash[:success] = "Applicant hired"
     redirect_to job_applications_path
   end
@@ -44,6 +44,6 @@ class JobApplicationsController < ApplicationController
 
   def job_application_params
     params.require(:job_application).permit(:content, :status, :sender_id,
-                                    :recipient_id, :post_id)
+                                            :recipient_id, :post_id)
   end
 end

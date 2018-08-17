@@ -20,17 +20,28 @@ class InvitesController < ApplicationController
 
   def accept
     @invite = Invite.find_by(id: params[:id])
-    @post = Post.where(id: @invite.post_id)
-    @invite.update(status: 1)
-    @post.update(status: 1)
-    flash[:success] = "Invite accepted."
+    @post = Post.find_by(id: @invite.post_id)
+    if @invite.accepted?
+      flash[:danger] = "Invite already accepted."
+    else
+      @invite.accepted!
+      @post.closed!
+      @job_application = current_user.sent_applications.create(
+                          content: "I would like to apply", status: "accepted",
+                          recipient_id: @post.user_id, post_id: @post.id)
+      flash[:success] = "Invite accepted."
+    end
     redirect_to invites_path
   end
 
   def decline
     @invite = Invite.find_by(id: params[:id])
-    @invite.update(status: 2)
-    flash[:success] = "Invite declined."
+    if @invite.declined?
+      flash[:danger] = "Invite already declined."
+    else
+      @invite.declined!
+      flash[:success] = "Invite declined."
+    end
     redirect_to invites_path
   end
 
@@ -45,6 +56,6 @@ class InvitesController < ApplicationController
 
   def invite_params
     params.require(:invite).permit(:content, :status, :sender_id,
-                                    :recipient_id, :post_id)
+                                   :recipient_id, :post_id)
   end
 end

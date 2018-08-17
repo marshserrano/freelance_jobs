@@ -31,8 +31,8 @@
                   <td><%= a.content %></td>
                   <td><%= a.status.capitalize %></td>
                   <td><%= link_to 'Hire', accept_job_application_path(a.id),
-                                  data: { confirm: 'Are you sure you want to hire this freelancer?' }%>
-                  </td>
+                                  data: { confirm: 'Are you sure you want to hire this freelancer?' },
+                                  class:"btn btn-primary btn-sm" %></td>
                 </tr>
               <% end %>
             <% end %>
@@ -72,8 +72,9 @@
                             employer_profile_path(a.recipient.id) %></td>
                     <td><%= a.content %></td>
                     <td><%= a.status.capitalize %></td>
-                    <td><%= link_to 'Delete', a, method: :delete, data:
-                                  { confirm: 'Are you sure you want to delete this application?' } %></td>
+                    <td><%= link_to 'Delete', a, method: :delete,
+                                  data: { confirm: 'Are you sure you want to delete this application?' },
+                                  class:"btn btn-danger btn-sm" %></td>
                   </tr>
                 <% end %>
               <% end %>
