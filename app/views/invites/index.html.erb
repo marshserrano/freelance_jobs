@@ -13,6 +13,7 @@
           <table>
             <thead>
               <tr>
+                <th>Date/Time</th>
                 <th>Job Name</th>
                 <th>Freelancer</th>
                 <th>Message</th>
@@ -27,6 +28,7 @@
                   <!-- if i.status == "accepted" || i.status == "completed"
                   else -->
                     <tr id="i-<%= i.id %>">
+                      <td><%= datetime_format(i.created_at) %></td>
                       <td><%= i.post.name %></td>
                       <td><%= link_to i.recipient.name,
                               freelancer_profile_path(i.recipient.id) %></td>
@@ -56,6 +58,7 @@
           <table>
             <thead>
               <tr>
+                <th>Date/Time</th>
                 <th>Job Name</th>
                 <th>Employer</th>
                 <th>Message</th>
@@ -69,6 +72,7 @@
                 <!-- if i.status == "accepted" || i.status == "completed"
                 else -->
                   <tr id="i-<%= i.id %>">
+                    <td><%= datetime_format(i.created_at) %></td>
                     <td><%= i.post.name %></td>
                     <td><%= link_to i.sender.name,
                             employer_profile_path(i.sender.id) %></td>

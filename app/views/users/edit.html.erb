@@ -5,7 +5,7 @@
   </aside><br><br><br>
   <div class="col-md-6">
     <%= form_for(@user) do |f| %>
-      <%= render 'shared/error_messages' %>
+      <%= render 'shared/error_messages', object: @user %>
 
       <%= f.label :name %>
       <%= f.text_field :name, class: 'form-control' %>
@@ -13,9 +13,17 @@
       <%= f.label :email %>
       <%= f.email_field :email, class: 'form-control' %>
 
+      <!-- <%= f.fields_for :addresses do |a| %>
+        <%= a.label "Address" %>
+        <%= a.text_field :barangay, class: 'form-control', placeholder: 'Barangay' %>
+        <%= a.text_field :city_municipality, class: 'form-control', placeholder: 'City/Municipality' %>
+        <%= a.text_field :province, class: 'form-control', placeholder: 'Province' %>
+        <%= a.text_field :zip_code, class: 'form-control', placeholder: 'Zip Code' %>
+      <% end %> -->
+
       <% if current_user.employer? %>
-      <%= f.label :company_name %>
-      <%= f.text_field :company_name, class: 'form-control' %>
+      <%= f.label :company %>
+      <%= f.text_field :company, class: 'form-control' %>
 
       <%= f.label :job_title %>
       <%= f.text_field :job_title, class: 'form-control' %>
@@ -28,16 +36,10 @@
       <%= f.label :summary %>
       <%= f.text_area :summary, class: 'form-control' %>
 
-      <%= f.label :skills %>
-      <%= f.text_field :skills, class: 'form-control' %>
-
       <%= f.label :rate %>
       <%= f.text_field :rate, class: 'form-control' %>
 
       <% end %>
-
-      <%= f.label :location %>
-      <%= f.text_field :location, class: 'form-control' %>
 
       <%= f.submit "Edit Profile", class: "btn btn-primary" %>
     <% end %>

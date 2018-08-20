@@ -8,18 +8,39 @@
         <h4>User Profile</h4><br>
           <strong>Name:</strong> <%= current_user.name %><br>
           <strong>Email:</strong> <%= current_user.email %><br>
+          <!-- <strong>Address:</strong><br> -->
           <% if current_user.employer? %>
-          <strong>Company:</strong> <%= current_user.company_name %><br>
+          <strong>Company:</strong> <%= current_user.company %><br>
           <strong>Job Title:</strong> <%= current_user.job_title %><br>
-          <strong>Location:</strong> <%= current_user.location %>
           <% else %>
           <strong>Brief Intro:</strong> <%= current_user.brief_intro %><br>
           <strong>Summary:</strong> <%= current_user.summary %><br>
-          <strong>Skills:</strong> <%= current_user.skills %><br>
-          <strong>Location:</strong> <%= current_user.location %><br>
-          <strong>Rate:</strong> <%= current_user.rate %> per hour
+          <strong>Rate:</strong> <%= current_user.rate %> per hour<br>
           <% end %>
     </section><br><br>
+
+    <% if current_user.freelancer? %>
+    <section class="user_info">
+        <h4>Skills</h4>
+        <%= link_to 'Add Skills', new_skill_path, class:"btn btn-default btn-sm" %>
+        <% if current_user.skills.any? %>
+          <ul class="job_posts">
+            <% current_user.skills.each do |s| %>
+            <!-- <%= render current_user.posts %> -->
+              <li id="s-<%= s.id %>">
+                <span class="name"><h4><%= s.name %></h4></span>
+                <span class="rating">Rating: <%= s.rating %></span> <br>
+                <%= link_to 'Edit', edit_skill_path(s), class:"btn btn-primary btn-sm" %>
+                <%= link_to 'Delete', post, method: :delete, data:
+                              { confirm: 'Are you sure you want to delete this skill?' },
+                                class:"btn btn-danger btn-sm" %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+    </section><br><br>
+    <% end %>
+
     <section class="user_info">
         <h4>Reviews</h4><br>
     </section><br><br>

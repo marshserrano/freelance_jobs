@@ -9,4 +9,7 @@ module ApplicationHelper
     end
   end
 
+  def datetime_format(datetime)
+    datetime.in_time_zone("Asia/Manila").strftime("%B %-d, %Y, %I:%M %p")
+  end
 end

@@ -6,7 +6,6 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :addresses
-    resources :skills
   end
   resources :invites do
     member do
@@ -26,6 +25,7 @@ Rails.application.routes.draw do
       get '/complete',  to: 'active_jobs#complete'
     end
   end
+  resources :skills
   resources :completed_jobs
   resources :posts
   resources :reviews
