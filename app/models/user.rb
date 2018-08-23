@@ -7,8 +7,8 @@ class User < ApplicationRecord
   has_many :reviews, class_name: "Review", foreign_key: "reviewee_id"
   has_many :posts, dependent: :destroy
   has_many :skills
-  has_one  :address
-  # accepts_nested_attributes_for :address
+  has_one  :address, dependent: :destroy
+  accepts_nested_attributes_for :address
 
   validates :user_type, presence: true
   validates :name, presence: true

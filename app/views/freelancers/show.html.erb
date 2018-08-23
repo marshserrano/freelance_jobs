@@ -4,6 +4,12 @@
     <section class="user_info">
         <h4>User Profile</h4>
           <strong>Name:</strong> <%= @freelancer.name %><br>
+          <strong>Address:</strong>
+          <% if @freelancer.address.nil? %>
+          <% else %>
+          <%= @freelancer.address.join %>
+          <% end %>
+          <br>
           <strong>Brief Intro:</strong> <%= @freelancer.brief_intro %><br>
           <strong>Summary:</strong> <%= @freelancer.summary %><br>
           <strong>Rate:</strong> <%= @freelancer.rate %> per hour
@@ -40,7 +46,28 @@
         </table>
     </section><br>
     <section class="user_info">
-        <h4>Reviews</h4>
-    </section><br>
+        <h4>Reviews</h4><br>
+        <table>
+          <thead>
+            <tr>
+              <th>Job Post</th>
+              <th>Employer</th>
+              <th>Message</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+
+          <tbody>
+              <% @freelancer.reviews.each do |r| %>
+                  <tr id="r-<%= r.id %>">
+                    <td><%= r.job_application.post.name %></td>
+                    <td><%= r.reviewer.name %></td>
+                    <td><%= r.content %></td>
+                    <td><%= r.rating %></td>
+                  </tr>
+              <% end %>
+          </tbody>
+        </table>
+    </section><br><br>
   </div>
 </div>

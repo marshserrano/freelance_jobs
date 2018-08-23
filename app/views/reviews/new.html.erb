@@ -1,2 +1,18 @@
-<h1>Review#new</h1>
-<p>Find me in app/views/review/new.html.erb</p>
+<% provide(:title, 'Add Review') %>
+<%= render 'users/index_sidebar' %>
+
+  <div class="col-md-6">
+    <%= form_for([@job_application, @review]) do |f| %>
+      <%= render 'shared/error_messages', object: @review %>
+
+      <%= f.text_field :job_application_id, value: @job_application.id, type: "hidden" %>
+
+      <%= f.label "Message" %>
+      <%= f.text_area :content, class: 'form-control' %>
+
+      <%= f.label :rating %>
+      <%= f.select :rating, options_for_select([['1',1], ['2',2], ['3',3], ['4',4], ['5',5]]) %>
+
+      <%= f.submit 'Add', class: "btn btn-primary" %>
+    <% end %>
+  </div>

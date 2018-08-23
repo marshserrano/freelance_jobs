@@ -15,8 +15,8 @@
             </tr>
           </thead>
           <tbody>
-          <% if @active_jobs.any? %>
-            <% @active_jobs.each do |job| %>
+          <% if current_user.job_applications.any? %>
+            <% current_user.job_applications.each do |job| %>
               <% if job.accepted? || job.completed? %>
                 <tr id="job-<%= job.id %>">
                   <td><%= job.post.name %></td>
@@ -57,8 +57,8 @@
           </tr>
         </thead>
         <tbody>
-        <% if @active_jobs.any? %>
-          <% @active_jobs.each do |job| %>
+        <% if current_user.sent_applications.any? %>
+          <% current_user.sent_applications.each do |job| %>
             <% if job.accepted? || job.completed? %>
               <tr id="job-<%= job.id %>">
                 <td><%= job.post.name %></td>

@@ -11,7 +11,7 @@
       <%= s.text_field :name, class: 'form-control' %>
 
       <%= s.label :rating %>
-      <%= select_tag :rating, options_for_select([1, 2, 3, 4, 5], 1) %>
+      <%= s.select :rating, options_for_select([['1',1], ['2',2], ['3',3], ['4',4], ['5',5]]) %>
 
       <%= s.submit "Add", class: "btn btn-primary" %>
     <% end %>

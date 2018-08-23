@@ -16,6 +16,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.build_address
     if @user.save
       flash[:success] = "You have successfully registered! Please log in to access your account"
       redirect_to login_path
@@ -48,6 +49,9 @@ class UsersController < ApplicationController
     params.require(:user).permit(:user_type, :name, :email,
                                  :password, :password_confirmation,
                                  :company, :job_title,
-                                 :brief_intro, :summary, :rate)
+                                 :brief_intro, :summary, :rate,
+                                 address_attributes: [:barangay,
+                                   :city_municipality, :province,
+                                   :zip_code])
   end
 end

@@ -11,13 +11,12 @@ Rails.application.routes.draw do
     member do
       get '/accept',    to: 'invites#accept'
       get '/decline',   to: 'invites#decline'
-      # get '/delete',    to: 'invites#destroy'
     end
   end
-  resources :job_applications do
+  resources :job_applications, shallow: true do
+    resources :reviews
     member do
       get '/accept',    to: 'job_applications#accept'
-      # get '/delete',    to: 'job_applications#destroy'
     end
   end
   resources :active_jobs do
@@ -28,7 +27,6 @@ Rails.application.routes.draw do
   resources :skills
   resources :completed_jobs
   resources :posts
-  resources :reviews
 
   get    '/freelancers',        to: 'freelancers#index'
   get    '/freelancers/:id',    to: 'freelancers#show', as: 'freelancer_profile'

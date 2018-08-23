@@ -8,41 +8,102 @@
         <h4>User Profile</h4><br>
           <strong>Name:</strong> <%= current_user.name %><br>
           <strong>Email:</strong> <%= current_user.email %><br>
-          <!-- <strong>Address:</strong><br> -->
+          <strong>Address:</strong>
+          <% if current_user.address.nil? %>
+          <% else %>
+          <%= current_user.address.join %>
+          <% end %>
+          <br>
           <% if current_user.employer? %>
           <strong>Company:</strong> <%= current_user.company %><br>
           <strong>Job Title:</strong> <%= current_user.job_title %><br>
           <% else %>
           <strong>Brief Intro:</strong> <%= current_user.brief_intro %><br>
           <strong>Summary:</strong> <%= current_user.summary %><br>
-          <strong>Rate:</strong> <%= current_user.rate %> per hour<br>
+          <strong>Rate:</strong> <%= current_user.rate %><br>
           <% end %>
     </section><br><br>
 
     <% if current_user.freelancer? %>
     <section class="user_info">
         <h4>Skills</h4>
-        <%= link_to 'Add Skills', new_skill_path, class:"btn btn-default btn-sm" %>
-        <% if current_user.skills.any? %>
-          <ul class="job_posts">
-            <% current_user.skills.each do |s| %>
-            <!-- <%= render current_user.posts %> -->
-              <li id="s-<%= s.id %>">
-                <span class="name"><h4><%= s.name %></h4></span>
-                <span class="rating">Rating: <%= s.rating %></span> <br>
-                <%= link_to 'Edit', edit_skill_path(s), class:"btn btn-primary btn-sm" %>
-                <%= link_to 'Delete', post, method: :delete, data:
-                              { confirm: 'Are you sure you want to delete this skill?' },
-                                class:"btn btn-danger btn-sm" %>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
+        <%= link_to 'Add Skill', new_skill_path, class:"btn btn-default btn-sm" %> <br><br>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Rating</th>
+              <th colspan="2">Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+              <% current_user.skills.each do |s| %>
+                  <tr id="s-<%= s.id %>">
+                    <td><%= s.name %></td>
+                    <td><%= s.rating %></td>
+                    <td><%= link_to 'Edit', edit_skill_path(s), class:"btn btn-primary btn-sm" %>
+                        <%= link_to 'Delete', s, method: :delete, data:
+                                  { confirm: 'Are you sure you want to delete this skill?' },
+                                  class:"btn btn-danger btn-sm" %></td>
+                  </tr>
+              <% end %>
+          </tbody>
+        </table>
     </section><br><br>
     <% end %>
 
+<% if current_user.employer? %>
     <section class="user_info">
         <h4>Reviews</h4><br>
+        <table>
+          <thead>
+            <tr>
+              <th>Job Post</th>
+              <th>Freelancer</th>
+              <th>Message</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+
+          <tbody>
+              <% current_user.reviews.each do |r| %>
+                  <tr id="r-<%= r.id %>">
+                    <td><%= r.job_application.post.name %></td>
+                    <td><%= r.reviewer.name %></td>
+                    <td><%= r.content %></td>
+                    <td><%= r.rating %></td>
+                  </tr>
+              <% end %>
+          </tbody>
+        </table>
     </section><br><br>
+<% else %>
+    <section class="user_info">
+        <h4>Reviews</h4><br>
+        <table>
+          <thead>
+            <tr>
+              <th>Job Post</th>
+              <th>Employer</th>
+              <th>Message</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+
+          <tbody>
+              <% current_user.reviews.each do |r| %>
+                  <tr id="r-<%= r.id %>">
+                    <td><%= r.job_application.post.name %></td>
+                    <td><%= r.reviewer.name %></td>
+                    <td><%= r.content %></td>
+                    <td><%= r.rating %></td>
+                  </tr>
+              <% end %>
+          </tbody>
+        </table>
+    </section><br><br>
+<% end %>
   </div>
 </div>

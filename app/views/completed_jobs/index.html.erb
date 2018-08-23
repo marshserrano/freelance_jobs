@@ -14,8 +14,8 @@
             </tr>
           </thead>
           <tbody>
-          <% if @completed_jobs.any? %>
-            <% @completed_jobs.each do |job| %>
+          <% if current_user.job_applications.any? %>
+            <% current_user.job_applications.each do |job| %>
               <% if job.completed? %>
                 <tr id="job-<%= job.id %>">
                   <td><%= job.post.name %></td>
@@ -27,7 +27,7 @@
                           freelancer_profile_path(job.recipient.id) %></td>
                   <% end %>
                   <td><%= job.status %></td>
-                  <td><%= link_to 'Rate Freelancer', "#"%></td>
+                  <td><%= link_to 'Rate Freelancer', new_job_application_review_path(job.id) %></td>
                 </tr>
               <% end %>
             <% end %>
@@ -50,8 +50,8 @@
             </tr>
           </thead>
           <tbody>
-          <% if @completed_jobs.any? %>
-            <% @completed_jobs.each do |job| %>
+          <% if current_user.sent_applications.any? %>
+            <% current_user.sent_applications.each do |job| %>
               <% if job.completed? %>
                 <tr id="job-<%= job.id %>">
                   <td><%= job.post.name %></td>
@@ -63,7 +63,7 @@
                           employer_profile_path(job.recipient.id) %></td>
                   <% end %>
                   <td><%= job.status %></td>
-                  <td><%= link_to 'Rate Employer', "#"%></td>
+                  <td><%= link_to 'Rate Employer', new_job_application_review_path(job.id) %></td>
                 </tr>
               <% end %>
             <% end %>
