@@ -1,10 +1,9 @@
 <% provide(:title, 'Edit Profile') %>
+
+<%= form_for(@user) do |f| %>
+<h3>Edit Profile</h3><br>
 <div class="row">
-  <aside class="col-md-3">
-    <%= render 'show_sidebar' %>
-  </aside><br><br><br>
-  <div class="col-md-6">
-    <%= form_for(@user) do |f| %>
+  <div class="col-md-4">
       <%= render 'shared/error_messages', object: @user %>
 
       <%= f.label :name %>
@@ -20,28 +19,34 @@
         <%= a.text_field :province, class: 'form-control', placeholder: 'Province' %>
         <%= a.text_field :zip_code, class: 'form-control', placeholder: 'Zip Code' %>
       <% end %>
+  </div>
+  <div class="col-md-4" style="margin-left:110px;">
+    <% if current_user.employer? %>
+    <%= f.label :company %>
+    <%= f.text_field :company, class: 'form-control' %>
 
-      <% if current_user.employer? %>
-      <%= f.label :company %>
-      <%= f.text_field :company, class: 'form-control' %>
+    <%= f.label :job_title %>
+    <%= f.text_field :job_title, class: 'form-control' %>
 
-      <%= f.label :job_title %>
-      <%= f.text_field :job_title, class: 'form-control' %>
+    <% else %>
 
-      <% else %>
+    <%= f.label :brief_intro %>
+    <%= f.text_field :brief_intro, class: 'form-control' %>
 
-      <%= f.label :brief_intro %>
-      <%= f.text_field :brief_intro, class: 'form-control' %>
+    <%= f.label :summary %>
+    <%= f.text_area :summary, class: 'form-control' %>
 
-      <%= f.label :summary %>
-      <%= f.text_area :summary, class: 'form-control' %>
+    <%= f.label :rate %>
+    <%= f.text_field :rate, class: 'form-control' %>
 
-      <%= f.label :rate %>
-      <%= f.text_field :rate, class: 'form-control' %>
-
-      <% end %>
-
-      <%= f.submit "Edit Profile", class: "btn btn-primary" %>
     <% end %>
   </div>
-</div><br><br><br>
+</div><br>
+<div class="row">
+  <div class="col-md-2">
+  <%= f.submit "Edit Profile", class: "btn btn-primary" %>
+  <%= link_to "Cancel", current_user, class: "btn btn-danger btn-block" %>
+  </div>
+</div>
+  <% end %>
+<br><br><br>

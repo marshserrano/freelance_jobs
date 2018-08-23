@@ -25,7 +25,8 @@ class ReviewsController < ApplicationController
       flash[:success] = "Review added"
       redirect_to completed_jobs_path
     else
-      render 'new'
+      flash[:danger] = "You can't add a review more than once"
+      redirect_to completed_jobs_path
     end
   end
 

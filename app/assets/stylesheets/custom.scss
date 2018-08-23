@@ -240,7 +240,17 @@ input {
     color: $gray-light;
     display: block;
     margin-left: 60px;
+  }
+  .default{
+    margin-left: 60px;
+    display: inline-block;
   }}
+
+.timestamp-default {
+  color: $gray-light;
+  display: block;
+  margin-left: 60px;
+}
 
 aside {
   textarea {
@@ -267,4 +277,13 @@ th {
 }
 td {
  text-align: center;
+}
+
+.w3-table{
+	border-collapse:collapse;
+	border-color: white;
+}
+.w3-table td,.w3-table th{
+	text-align:left;
+	border-color: white;
 }

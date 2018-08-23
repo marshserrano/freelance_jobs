@@ -1,109 +1,113 @@
-<% provide(:title, current_user.name) %>
+<% provide(:title, @user.name) %>
 <div class="row">
-  <aside class="col-md-3">
-    <%= render 'show_sidebar' %>
-  </aside>
-  <div class="col-md-8">
+  <div class="col-md-12">
     <section class="user_info">
-        <h4>User Profile</h4><br>
-          <strong>Name:</strong> <%= current_user.name %><br>
-          <strong>Email:</strong> <%= current_user.email %><br>
+        <h4>User Profile</h4>
+        <% if current_user.id == @user.id %>
+        <%= link_to 'Edit Profile', edit_user_path(current_user), class:"btn btn-default btn-sm" %> <br><br><br>
+        <% end %>
+          <strong>Name:</strong> <%= @user.name %><br>
+          <strong>Email:</strong> <%= @user.email %><br>
           <strong>Address:</strong>
-          <% if current_user.address.nil? %>
+          <% if @user.address.nil? %>
           <% else %>
-          <%= current_user.address.join %>
+          <%= @user.address.join %>
           <% end %>
           <br>
-          <% if current_user.employer? %>
-          <strong>Company:</strong> <%= current_user.company %><br>
-          <strong>Job Title:</strong> <%= current_user.job_title %><br>
+          <% if @user.employer? %>
+          <strong>Company:</strong> <%= @user.company %><br>
+          <strong>Job Title:</strong> <%= @user.job_title %><br>
           <% else %>
-          <strong>Brief Intro:</strong> <%= current_user.brief_intro %><br>
-          <strong>Summary:</strong> <%= current_user.summary %><br>
-          <strong>Rate:</strong> <%= current_user.rate %><br>
+          <strong>Brief Intro:</strong> <%= @user.brief_intro %><br>
+          <strong>Summary:</strong> <%= @user.summary %><br>
+          <strong>Rate:</strong> <%= @user.rate %><br>
           <% end %>
     </section><br><br>
 
-    <% if current_user.freelancer? %>
+    <% if @user.freelancer? %>
     <section class="user_info">
         <h4>Skills</h4>
+        <% if current_user.id == @user.id %>
         <%= link_to 'Add Skill', new_skill_path, class:"btn btn-default btn-sm" %> <br><br>
+        <% end %>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Rating</th>
-              <th colspan="2">Action</th>
-            </tr>
-          </thead>
-
-          <tbody>
-              <% current_user.skills.each do |s| %>
+        <table class="w3-table">
+              <% @user.skills.each do |s| %>
                   <tr id="s-<%= s.id %>">
                     <td><%= s.name %></td>
-                    <td><%= s.rating %></td>
+                    <td><% s.rating.to_i.times do  %>
+                     <span class="glyphicon glyphicon-star"></span>
+                    <% end %>
+                    <% s.blank_stars.times do  %>
+                     <span class="glyphicon glyphicon-star-empty"></span>
+                    <% end %></td>
+                    <% if current_user.id == @user.id %>
                     <td><%= link_to 'Edit', edit_skill_path(s), class:"btn btn-primary btn-sm" %>
                         <%= link_to 'Delete', s, method: :delete, data:
                                   { confirm: 'Are you sure you want to delete this skill?' },
                                   class:"btn btn-danger btn-sm" %></td>
+                    <% end %>
                   </tr>
               <% end %>
+        </table>
+    </section><br><br>
+
+    <section class="user_info">
+        <h4>Job History</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Job Name</th>
+              <th>Employer</th>
+              <th>Outcome</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if @user.sent_applications.any? %>
+              <% @user.sent_applications.each do |job| %>
+                <% if job.completed? %>
+                  <tr id="job-<%= job.id %>">
+                    <td><%= job.post.name %></td>
+                    <% if job.sender.user_type == "employer" %>
+                    <td><%= link_to job.sender.name,
+                            employer_profile_path(job.sender.id) %></td>
+                    <% else %>
+                    <td><%= link_to job.recipient.name,
+                            employer_profile_path(job.sender.id) %></td>
+                    <% end %>
+                    <td><%= job.status %></td>
+                  </tr>
+                <% end %>
+              <% end %>
+            <% end %>
           </tbody>
         </table>
     </section><br><br>
     <% end %>
 
-<% if current_user.employer? %>
     <section class="user_info">
-        <h4>Reviews</h4><br>
-        <table>
-          <thead>
-            <tr>
-              <th>Job Post</th>
-              <th>Freelancer</th>
-              <th>Message</th>
-              <th>Rating</th>
-            </tr>
-          </thead>
-
-          <tbody>
-              <% current_user.reviews.each do |r| %>
-                  <tr id="r-<%= r.id %>">
-                    <td><%= r.job_application.post.name %></td>
-                    <td><%= r.reviewer.name %></td>
-                    <td><%= r.content %></td>
-                    <td><%= r.rating %></td>
-                  </tr>
-              <% end %>
-          </tbody>
-        </table>
+      <h4>Reviews</h4>
+      <% if @user.reviews.any? %>
+        <% @user.reviews.each do |r| %>
+              <li id="r-<%= r.id %>">
+                <span class="default"><strong><%= r.job_application.post.name %></strong></span><br>
+                <span class="default"><span class="badge"><%= r.rating %></span>
+                <% r.rating.to_i.times do  %>
+                 <span class="glyphicon glyphicon-star"></span>
+                <% end %>
+                <% r.blank_stars.times do  %>
+                 <span class="glyphicon glyphicon-star-empty"></span>
+                <% end %></span><br>
+                <span class="default"><%= r.content %></span> <br>
+                <span class="default">- <%= r.reviewer.name %></span> <br>
+                <span class="timestamp-default">
+                  Posted <%= time_ago_in_words(r.created_at) %> ago.
+                </span>
+              </li><br><br>
+        <% end %>
+      <% else %>
+        <h5><i>No reviews</i></h5>
+      <% end %>
     </section><br><br>
-<% else %>
-    <section class="user_info">
-        <h4>Reviews</h4><br>
-        <table>
-          <thead>
-            <tr>
-              <th>Job Post</th>
-              <th>Employer</th>
-              <th>Message</th>
-              <th>Rating</th>
-            </tr>
-          </thead>
-
-          <tbody>
-              <% current_user.reviews.each do |r| %>
-                  <tr id="r-<%= r.id %>">
-                    <td><%= r.job_application.post.name %></td>
-                    <td><%= r.reviewer.name %></td>
-                    <td><%= r.content %></td>
-                    <td><%= r.rating %></td>
-                  </tr>
-              <% end %>
-          </tbody>
-        </table>
-    </section><br><br>
-<% end %>
   </div>
 </div>

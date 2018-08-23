@@ -8,7 +8,7 @@
       <% User.freelancer.each do |f| %>
         <ul class="job_posts">
           <li id="user-<%= f.id %>">
-            <strong>Name:</strong> <%= link_to f.name, freelancer_profile_path(f.id)%><br>
+            <strong>Name:</strong> <%= link_to f.name, user_path(f.id)%><br>
             <strong>Address:</strong>
             <% if f.address.nil? %>
             <% else %>

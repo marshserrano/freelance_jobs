@@ -29,6 +29,4 @@ Rails.application.routes.draw do
   resources :posts
 
   get    '/freelancers',        to: 'freelancers#index'
-  get    '/freelancers/:id',    to: 'freelancers#show', as: 'freelancer_profile'
-  get    '/employers/:id',      to: 'employers#show', as: 'employer_profile'
 end

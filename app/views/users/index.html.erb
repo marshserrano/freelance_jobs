@@ -12,7 +12,6 @@
         <% if current_user.posts.any? %>
           <ul class="job_posts">
             <% current_user.posts.each do |post| %>
-            <!-- <%= render current_user.posts %> -->
               <li id="post-<%= post.id %>">
                 <span class="name"><h4><%= post.name %></h4></span>
                 <span class="description">Description: <%= post.description %></span> <br>

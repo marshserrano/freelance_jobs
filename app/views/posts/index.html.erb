@@ -8,7 +8,7 @@
             <ul class="job_posts">
               <li id="job_post-<%= j.id %>">
                 <span class="name"><h4><%= j.name %></h4></span>
-                <span class="description"><strong>Employer:</strong> <%= link_to j.user.name, employer_profile_path(j.user.id)%></span><br>
+                <span class="description"><strong>Employer:</strong> <%= link_to j.user.name, user_path(j.user.id)%></span><br>
                 <span class="description"><strong>Description:</strong> <%= j.description %></span> <br>
                 <span class="skills"><strong>Skills Required:</strong> <%= j.skills %></span> <br>
                 <span class="budget"><strong>Budget:</strong> <%= j.budget %></span> per hour <br>
