@@ -31,7 +31,7 @@
                       <td><%= datetime_format(i.created_at) %></td>
                       <td><%= i.post.name %></td>
                       <td><%= link_to i.recipient.name,
-                              freelancer_profile_path(i.recipient.id) %></td>
+                              user_path(i.recipient.id) %></td>
                       <td><%= i.content %></td>
                       <td><%= i.status %></td>
                       <% if i.pending? %>
@@ -43,7 +43,7 @@
                   <!-- end -->
                 <% end %>
               <% else %>
-                <tr><td colspan="5">There are currently no job invitations</td></tr>
+                <tr><td colspan="6">There are currently no job invitations</td></tr>
               <% end %>
             </tbody>
           </table>
@@ -75,7 +75,7 @@
                     <td><%= datetime_format(i.created_at) %></td>
                     <td><%= i.post.name %></td>
                     <td><%= link_to i.sender.name,
-                            employer_profile_path(i.sender.id) %></td>
+                            user_path(i.sender.id) %></td>
                     <td><%= i.content %></td>
                     <td><%= i.status %></td>
                     <% if i.pending? %>
@@ -90,7 +90,7 @@
                 <!-- end -->
               <% end %>
             <% else %>
-              <tr><td colspan="5">There are currently no job invitations</td></tr>
+              <tr><td colspan="6">There are currently no job invitations</td></tr>
             <% end %>
             </tbody>
           </table>

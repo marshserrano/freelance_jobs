@@ -22,10 +22,10 @@
                   <td><%= job.post.name %></td>
                   <% if job.sender.user_type == "freelancer" %>
                   <td><%= link_to job.sender.name,
-                          freelancer_profile_path(job.sender.id) %></td>
+                          user_path(job.sender.id) %></td>
                   <% else %>
                   <td><%= link_to job.recipient.name,
-                          freelancer_profile_path(job.recipient.id) %></td>
+                          user_path(job.recipient.id) %></td>
                   <% end %>
                   <!-- <td>job.status = "In progress"</td> -->
                   <td><%= job.status %></td>
@@ -64,10 +64,10 @@
                 <td><%= job.post.name %></td>
                 <% if job.sender.user_type == "employer" %>
                 <td><%= link_to job.sender.name,
-                        employer_profile_path(job.sender.id) %></td>
+                        user_path(job.sender.id) %></td>
                 <% else %>
                 <td><%= link_to job.recipient.name,
-                        employer_profile_path(job.recipient.id) %></td>
+                        user_path(job.recipient.id) %></td>
                 <% end %>
                 <!-- <td>job.status = "In progress"</td> -->
                 <td><%= job.status %></td>

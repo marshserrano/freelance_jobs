@@ -21,10 +21,10 @@
                   <td><%= job.post.name %></td>
                   <% if job.sender.user_type == "freelancer" %>
                   <td><%= link_to job.sender.name,
-                          freelancer_profile_path(job.sender.id) %></td>
+                          user_path(job.sender.id) %></td>
                   <% else %>
                   <td><%= link_to job.recipient.name,
-                          freelancer_profile_path(job.recipient.id) %></td>
+                          user_path(job.recipient.id) %></td>
                   <% end %>
                   <td><%= job.status %></td>
                   <td><%= link_to 'Rate Freelancer', new_job_application_review_path(job.id) %></td>
@@ -57,10 +57,10 @@
                   <td><%= job.post.name %></td>
                   <% if job.sender.user_type == "employer" %>
                   <td><%= link_to job.sender.name,
-                          employer_profile_path(job.sender.id) %></td>
+                          user_path(job.sender.id) %></td>
                   <% else %>
                   <td><%= link_to job.recipient.name,
-                          employer_profile_path(job.recipient.id) %></td>
+                          user_path(job.recipient.id) %></td>
                   <% end %>
                   <td><%= job.status %></td>
                   <td><%= link_to 'Rate Employer', new_job_application_review_path(job.id) %></td>

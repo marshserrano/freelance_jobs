@@ -29,7 +29,7 @@
                   <td><%= datetime_format(a.created_at) %></td>
                   <td><%= a.post.name %></td>
                   <td><%= link_to a.sender.name,
-                          freelancer_profile_path(a.sender.id) %></td>
+                          user_path(a.sender.id) %></td>
                   <td><%= a.content %></td>
                   <td><%= a.status.capitalize %></td>
                   <td><%= link_to 'Hire', accept_job_application_path(a.id),
@@ -39,7 +39,7 @@
               <% end %>
             <% end %>
           <% else %>
-            <tr><td colspan="5">There are currently no applicants</td></tr>
+            <tr><td colspan="6">There are currently no applicants</td></tr>
           <% end %>
           </tbody>
         </table>
@@ -73,7 +73,7 @@
                     <td><%= datetime_format(a.created_at) %></td>
                     <td><%= a.post.name %></td>
                     <td><%= link_to a.recipient.name,
-                            employer_profile_path(a.recipient.id) %></td>
+                            user_path(a.recipient.id) %></td>
                     <td><%= a.content %></td>
                     <td><%= a.status.capitalize %></td>
                     <td><%= link_to 'Delete', a, method: :delete,
@@ -83,7 +83,7 @@
                 <% end %>
               <% end %>
             <% else %>
-              <tr><td colspan="5">There are currently no job applications</td></tr>
+              <tr><td colspan="6">There are currently no job applications</td></tr>
             <% end %>
             </tbody>
           </table>

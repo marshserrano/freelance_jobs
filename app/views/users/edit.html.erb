@@ -20,6 +20,7 @@
         <%= a.text_field :zip_code, class: 'form-control', placeholder: 'Zip Code' %>
       <% end %>
   </div>
+
   <div class="col-md-4" style="margin-left:110px;">
     <% if current_user.employer? %>
     <%= f.label :company %>
@@ -42,6 +43,7 @@
     <% end %>
   </div>
 </div><br>
+
 <div class="row">
   <div class="col-md-2">
   <%= f.submit "Edit Profile", class: "btn btn-primary" %>

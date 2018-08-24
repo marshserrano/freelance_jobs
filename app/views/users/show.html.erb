@@ -54,6 +54,7 @@
 
     <section class="user_info">
         <h4>Job History</h4>
+        <% if @user.sent_applications.any? %>
         <table>
           <thead>
             <tr>
@@ -63,25 +64,26 @@
             </tr>
           </thead>
           <tbody>
-            <% if @user.sent_applications.any? %>
               <% @user.sent_applications.each do |job| %>
                 <% if job.completed? %>
                   <tr id="job-<%= job.id %>">
                     <td><%= job.post.name %></td>
                     <% if job.sender.user_type == "employer" %>
                     <td><%= link_to job.sender.name,
-                            employer_profile_path(job.sender.id) %></td>
+                            user_path(job.sender.id) %></td>
                     <% else %>
                     <td><%= link_to job.recipient.name,
-                            employer_profile_path(job.sender.id) %></td>
+                            user_path(job.recipient.id) %></td>
                     <% end %>
                     <td><%= job.status %></td>
                   </tr>
                 <% end %>
               <% end %>
-            <% end %>
           </tbody>
         </table>
+        <% else %>
+        <h5><i>No Job History</i></h5>
+        <% end %>
     </section><br><br>
     <% end %>
 

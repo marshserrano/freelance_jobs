@@ -43,3 +43,8 @@ User.create!(name: "Freelancer Marsh",
                user_type: user_type,
                brief_intro: brief_intro)
 end
+
+12.times do |a|
+  user_id = "#{a+1}"
+  Address.create!(user_id: user_id)
+end
