@@ -1,78 +1,64 @@
 <% provide(:title, 'Active Jobs') %>
 <%= render 'users/index_sidebar' %>
   <div class="col-md-8">
-  <% if current_user.employer? %>
     <section class="user_info">
+
+        <% if is_employer %>
         <h4>Completed Jobs</h4>
-        <table>
-          <thead>
-            <tr>
-              <th>Job Name</th>
-              <th>Freelancer</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-          <% if current_user.job_applications.completed.any? %>
-            <% current_user.job_applications.each do |job| %>
-              <% if job.completed? %>
-                <tr id="job-<%= job.id %>">
-                  <td><%= job.post.name %></td>
-                  <% if job.sender.user_type == "freelancer" %>
-                  <td><%= link_to job.sender.name,
-                          user_path(job.sender.id) %></td>
-                  <% else %>
-                  <td><%= link_to job.recipient.name,
-                          user_path(job.recipient.id) %></td>
-                  <% end %>
-                  <td><%= job.status %></td>
-                  <td><%= link_to 'Rate Freelancer', new_job_application_review_path(job.id) %></td>
-                </tr>
-              <% end %>
-            <% end %>
-          <% else %>
-            <tr><td colspan="4">There are currently no completed jobs</td></tr>
-          <% end %>
-          </tbody>
-        </table>
-    </section>
-  <% else %>
-    <section class="user_info">
+        <% else %>
         <h4>Past Jobs</h4>
+        <% end %>
+
         <table>
           <thead>
             <tr>
               <th>Job Name</th>
+              <% if is_employer %>
+              <th>Freelancer</th>
+              <% else %>
               <th>Employer</th>
+              <% end %>
               <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-          <% if current_user.sent_applications.completed.any? %>
-            <% current_user.sent_applications.each do |job| %>
-              <% if job.completed? %>
+            <% @completed_jobs.each do |job| %>
                 <tr id="job-<%= job.id %>">
                   <td><%= job.post.name %></td>
-                  <% if job.sender.user_type == "employer" %>
-                  <td><%= link_to job.sender.name,
-                          user_path(job.sender.id) %></td>
+
+                  <% if is_employer %>
+                    <% if job.sender.user_type == "freelancer" %>
+                    <td><%= link_to job.sender.name,
+                            user_path(job.sender.id) %></td>
+                    <% else %>
+                    <td><%= link_to job.recipient.name,
+                            user_path(job.recipient.id) %></td>
+                    <% end %>
+
                   <% else %>
-                  <td><%= link_to job.recipient.name,
-                          user_path(job.recipient.id) %></td>
+
+                    <% if job.sender.user_type == "employer" %>
+                    <td><%= link_to job.sender.name,
+                            user_path(job.sender.id) %></td>
+                    <% else %>
+                    <td><%= link_to job.recipient.name,
+                            user_path(job.recipient.id) %></td>
+                    <% end %>
                   <% end %>
+
                   <td><%= job.status %></td>
+
+                  <% if is_employer %>
+                  <td><%= link_to 'Rate Freelancer', new_job_application_review_path(job.id) %></td>
+                  <% else %>
                   <td><%= link_to 'Rate Employer', new_job_application_review_path(job.id) %></td>
+                  <% end %>
+
                 </tr>
-              <% end %>
             <% end %>
-          <% else %>
-            <tr><td colspan="4">There are currently no completed jobs</td></tr>
-          <% end %>
           </tbody>
         </table>
     </section>
-  <% end %>
   </div>
 </div>

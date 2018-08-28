@@ -1,6 +1,10 @@
 class ActiveJobsController < ApplicationController
   def index
-    @active_jobs = JobApplication.all
+    if is_employer
+      @active_jobs = current_user.job_applications.accepted
+    else
+      @active_jobs = current_user.sent_applications.accepted
+    end
   end
 
   def complete

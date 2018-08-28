@@ -8,6 +8,7 @@ class JobApplication < ApplicationRecord
   default_scope -> { order(created_at: :desc) }
 
   scope :pending, -> { where(status: "pending") }
-
+  scope :accepted, -> { where(status: "accepted") }
+  scope :completed, -> { where(status: "completed") }
   scope :pending_or_declined, -> { where(status: ["pending", "declined"]) }
 end

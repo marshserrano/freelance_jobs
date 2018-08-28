@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
     current_user.employer?
   end
 
+  def is_freelancer
+    current_user.freelancer?
+  end
+
   # Returns true if the given user is the current user.
   def current_user?(user)
     user == current_user
