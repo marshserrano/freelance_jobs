@@ -1,4 +1,5 @@
 class InviteDatatable < AjaxDatatablesRails::ActiveRecord
+  #not used yet
 
   def view_columns
     # Declare strings in this format: ModelName.column_name

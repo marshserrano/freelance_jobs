@@ -1,7 +1,11 @@
 class JobApplicationsController < ApplicationController
 
   def index
-    @job_applications = JobApplication.all
+    if is_employer
+      @job_application = current_user.job_applications.pending_or_declined
+    else
+      @job_application = current_user.sent_applications.pending_or_declined
+    end
   end
 
   def new
