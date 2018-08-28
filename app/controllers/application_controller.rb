@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :current_user, :logged_in?
+  helper_method :current_user, :logged_in?, :is_employer
+
+  def is_employer
+    current_user.employer?
+  end
 
   # Returns true if the given user is the current user.
   def current_user?(user)

@@ -1,0 +1,102 @@
+<% provide(:title, "Job Invitations") %>
+<%= render 'users/index_sidebar' %>
+
+<div class="col-md-8">
+  <section class="user_info">
+    <h4>Job Invitations</h4>
+
+    <% if current_user.employer? %>
+      <%= link_to 'Add New', new_invite_path, class:"btn btn-default btn-sm" %>
+      <br><br>
+      <ul class="job_posts">
+        <li>
+          <table>
+            <thead>
+              <tr>
+                <th>Date/Time</th>
+                <th>Job Name</th>
+                <th>Freelancer</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th colspan="2">Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% if current_user.sent_invites.pending.any? || current_user.sent_invites.declined.any? %>
+                <% current_user.sent_invites.each do |i| %>
+                  <% if i.status == "accepted" || i.status == "completed" %>
+                  <% else %>
+                    <tr id="i-<%= i.id %>">
+                      <td><%= datetime_format(i.created_at) %></td>
+                      <td><%= i.post.name %></td>
+                      <td><%= link_to i.recipient.name,
+                              user_path(i.recipient.id) %></td>
+                      <td><%= i.content %></td>
+                      <td><%= i.status %></td>
+                      <% if i.pending? %>
+                      <td><%= link_to 'Delete', i, method: :delete, data:
+                                    { confirm: 'Are you sure you want to delete this invite?' },
+                                    class:"btn btn-danger btn-sm" %></td>
+                      <% end %>
+                    </tr>
+                  <% end %>
+                <% end %>
+              <% else %>
+                <tr><td colspan="6">There are currently no job invitations</td></tr>
+              <% end %>
+            </tbody>
+          </table>
+        </li>
+      </ul>
+
+    <% else %>
+
+      <br>
+      <ul class="job_posts">
+        <li>
+          <table>
+            <thead>
+              <tr>
+                <th>Date/Time</th>
+                <th>Job Name</th>
+                <th>Employer</th>
+                <th>Message</th>
+                <th>Status</th>
+                <th colspan="2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            <% if current_user.invites.pending.any? || current_user.invites.declined.any? %>
+              <% current_user.invites.each do |i| %>
+              <% if i.status == "accepted" || i.status == "completed" %>
+              <% else %>
+                  <tr id="i-<%= i.id %>">
+                    <td><%= datetime_format(i.created_at) %></td>
+                    <td><%= i.post.name %></td>
+                    <td><%= link_to i.sender.name,
+                            user_path(i.sender.id) %></td>
+                    <td><%= i.content %></td>
+                    <td><%= i.status %></td>
+                    <% if i.pending? %>
+                    <td><%= link_to 'Accept', accept_invite_path(i.id),
+                                data: { confirm: 'Are you sure you want to accept this job?' },
+                                class:"btn btn-primary btn-sm" %></td>
+                    <td><%= link_to 'Decline', decline_invite_path(i.id),
+                                data: { confirm: 'Are you sure you want to decline this job?' },
+                                class:"btn btn-danger btn-sm" %></td>
+                    <% end %>
+                  </tr>
+                <% end %>
+              <% end %>
+            <% else %>
+              <tr><td colspan="6">There are currently no job invitations</td></tr>
+            <% end %>
+            </tbody>
+          </table>
+        </li>
+      </ul>
+    <% end %>
+
+  </section>
+</div>

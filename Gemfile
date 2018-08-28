@@ -15,6 +15,9 @@ gem 'bootstrap-sass', '~> 3.3.7'
 gem 'jquery-rails'
 gem 'bcrypt'
 
+gem 'ajax-datatables-rails'
+gem 'jquery-datatables-rails', '~> 3.4.0'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end

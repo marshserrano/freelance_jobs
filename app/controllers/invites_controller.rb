@@ -1,7 +1,11 @@
 class InvitesController < ApplicationController
 
   def index
-    @invites = Invite.all
+    if is_employer
+      @invites = current_user.sent_invites.pending_or_declined
+    else
+      @invites = current_user.invites.pending_or_declined
+    end
   end
 
   def new
