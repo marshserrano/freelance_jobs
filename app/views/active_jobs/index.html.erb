@@ -15,9 +15,9 @@
             </tr>
           </thead>
           <tbody>
-          <% if current_user.job_applications.any? %>
+          <% if current_user.job_applications.accepted.any? %>
             <% current_user.job_applications.each do |job| %>
-              <% if job.accepted? || job.completed? %>
+              <% if job.accepted? %>
                 <tr id="job-<%= job.id %>">
                   <td><%= job.post.name %></td>
                   <% if job.sender.user_type == "freelancer" %>
@@ -57,9 +57,9 @@
           </tr>
         </thead>
         <tbody>
-        <% if current_user.sent_applications.any? %>
+        <% if current_user.sent_applications.accepted.any? %>
           <% current_user.sent_applications.each do |job| %>
-            <% if job.accepted? || job.completed? %>
+            <% if job.accepted? %>
               <tr id="job-<%= job.id %>">
                 <td><%= job.post.name %></td>
                 <% if job.sender.user_type == "employer" %>

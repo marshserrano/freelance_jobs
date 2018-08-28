@@ -21,7 +21,7 @@
           </thead>
 
           <tbody>
-          <% if current_user.job_applications.any? %>
+          <% if current_user.job_applications.pending.any? %>
             <% current_user.job_applications.each do |a| %>
               <% if a.status == "accepted" || a.status == "completed" %>
               <% else %>
@@ -65,7 +65,7 @@
               </tr>
             </thead>
             <tbody>
-            <% if current_user.sent_applications.any? %>
+            <% if current_user.sent_applications.pending.any? %>
               <% current_user.sent_applications.each do |a| %>
                 <% if a.status == "accepted" || a.status == "completed" %>
                 <% else %>

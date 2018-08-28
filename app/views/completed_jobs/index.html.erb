@@ -14,7 +14,7 @@
             </tr>
           </thead>
           <tbody>
-          <% if current_user.job_applications.any? %>
+          <% if current_user.job_applications.completed.any? %>
             <% current_user.job_applications.each do |job| %>
               <% if job.completed? %>
                 <tr id="job-<%= job.id %>">
@@ -50,7 +50,7 @@
             </tr>
           </thead>
           <tbody>
-          <% if current_user.sent_applications.any? %>
+          <% if current_user.sent_applications.completed.any? %>
             <% current_user.sent_applications.each do |job| %>
               <% if job.completed? %>
                 <tr id="job-<%= job.id %>">

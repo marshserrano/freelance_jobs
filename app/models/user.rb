@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   validates :user_type, presence: true
   validates :name, presence: true
-  validates :email, presence: true
+  validates :email, presence: true, format: /@/
   has_secure_password
   validates :password, presence: true, on: :create
   validates :password_confirmation, presence: true, on: :create

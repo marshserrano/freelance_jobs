@@ -26,7 +26,7 @@ class JobApplicationsController < ApplicationController
 
   def accept
     @job_application = JobApplication.find_by(id: params[:id])
-    @post = Post.where(id: @job_application.post_id)
+    @post = Post.find_by(id: @job_application.post_id)
     @job_application.accepted!
     @post.closed!
     flash[:success] = "Applicant hired"

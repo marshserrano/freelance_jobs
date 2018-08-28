@@ -12,7 +12,7 @@
             <strong>Address:</strong>
             <% if f.address.nil? %>
             <% else %>
-            <%= f.address.join %>
+            <%= f.address.full_address %>
             <% end %>
             <br>
             <strong>Brief Intro:</strong> <%= f.brief_intro %><br>

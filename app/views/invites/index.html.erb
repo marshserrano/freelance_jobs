@@ -23,10 +23,10 @@
             </thead>
 
             <tbody>
-              <% if current_user.sent_invites.any? %>
+              <% if current_user.sent_invites.pending.any? || current_user.sent_invites.declined.any? %>
                 <% current_user.sent_invites.each do |i| %>
-                  <!-- if i.status == "accepted" || i.status == "completed"
-                  else -->
+                  <% if i.status == "accepted" || i.status == "completed" %>
+                  <% else %>
                     <tr id="i-<%= i.id %>">
                       <td><%= datetime_format(i.created_at) %></td>
                       <td><%= i.post.name %></td>
@@ -40,7 +40,7 @@
                                     class:"btn btn-danger btn-sm" %></td>
                       <% end %>
                     </tr>
-                  <!-- end -->
+                  <% end %>
                 <% end %>
               <% else %>
                 <tr><td colspan="6">There are currently no job invitations</td></tr>
@@ -67,10 +67,10 @@
               </tr>
             </thead>
             <tbody>
-            <% if current_user.invites.any? %>
+            <% if current_user.invites.pending.any? || current_user.invites.declined.any? %>
               <% current_user.invites.each do |i| %>
-                <!-- if i.status == "accepted" || i.status == "completed"
-                else -->
+              <% if i.status == "accepted" || i.status == "completed" %>
+              <% else %>
                   <tr id="i-<%= i.id %>">
                     <td><%= datetime_format(i.created_at) %></td>
                     <td><%= i.post.name %></td>
@@ -87,7 +87,7 @@
                                 class:"btn btn-danger btn-sm" %></td>
                     <% end %>
                   </tr>
-                <!-- end -->
+                <% end %>
               <% end %>
             <% else %>
               <tr><td colspan="6">There are currently no job invitations</td></tr>

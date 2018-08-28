@@ -41,7 +41,7 @@ class PostsController < ApplicationController
     @post = current_user.posts.find_by(id: params[:id])
     @post.destroy
     flash[:success] = "Job post deleted"
-    redirect_to request.referrer || users_path
+    redirect_to users_path
   end
 
   private

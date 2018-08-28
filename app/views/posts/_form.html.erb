@@ -12,11 +12,11 @@
 
   <%= f.label :budget %>
   <!-- <%= f.number_field :budget, class: 'form-control', placeholder: 'per hour', :step => 0.01 %> -->
-  <%= f.text_field :budget, class: 'form-control', placeholder: 'per hour' %>
+  <%= f.text_field :budget, class: 'form-control' %>
 
   <%= f.label :hours_of_work %>
   <!-- <%= f.number_field :hours_of_work, class: 'form-control', placeholder: 'hour/week', :step => 0.5 %> -->
-  <%= f.text_field :hours_of_work, class: 'form-control', placeholder: 'hour/week' %>
+  <%= f.text_field :hours_of_work, class: 'form-control' %>
 
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 <% end %>
