@@ -13,7 +13,7 @@
         Welcome,<br><%= current_user.name %> <br>
       </h4>
       <ul>
-        <% if current_user.employer? %>
+        <% if is_employer %>
         <li><%= link_to 'Job Posts', users_path %></li>
         <li><%= link_to 'Job Invitations', invites_path %></li>
         <li><%= link_to 'Job Applicants', job_applications_path %></li>
@@ -25,7 +25,7 @@
       <br>
       <h1>Jobs</h1>
       <ul>
-        <% if current_user.employer? %>
+        <% if is_employer %>
         <li><%= link_to 'Work In Progress', active_jobs_path %></li>
         <li><%= link_to 'Completed', completed_jobs_path %></li>
         <% else %>

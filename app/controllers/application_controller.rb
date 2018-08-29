@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :current_user, :logged_in?, :is_employer
+  helper_method :current_user, :logged_in?, :is_employer, :is_freelancer
 
   def is_employer
     current_user.employer?

@@ -3,7 +3,7 @@
 <%= render 'index_sidebar' %>
 
 <div class="row">
-  <% if current_user.employer? %>
+  <% if is_employer %>
     <div class="col-md-8">
       <section class="user_info"> <br>
         <h4>Job Posts (<%= current_user.posts.count %>)</h4>

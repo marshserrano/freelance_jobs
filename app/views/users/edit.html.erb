@@ -22,7 +22,7 @@
   </div>
 
   <div class="col-md-4" style="margin-left:110px;">
-    <% if current_user.employer? %>
+    <% if is_employer %>
     <%= f.label :company %>
     <%= f.text_field :company, class: 'form-control' %>
 
