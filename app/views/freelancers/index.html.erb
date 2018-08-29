@@ -5,9 +5,9 @@
       <h1>
         Freelancers
       </h1>
-      <% User.freelancer.each do |f| %>
+      <% @freelancer.each do |f| %>
         <ul class="job_posts">
-          <li id="user-<%= f.id %>">
+          <li id="f-<%= f.id %>">
             <strong>Name:</strong> <%= link_to f.name, user_path(f.id)%><br>
             <strong>Address:</strong>
             <% if f.address.nil? %>

@@ -4,8 +4,7 @@
 <div class="col-md-8">
   <section class="user_info">
     <% if is_employer %>
-    <h4>Applicants</h4>
-    <br>
+    <h4>Applicants</h4><br>
     <% else %>
     <h4>Job Applications</h4>
     <%= link_to 'Add New', new_job_application_path, class:"btn btn-default btn-sm" %>
@@ -36,11 +35,9 @@
                   <td><%= datetime_format(a.created_at) %></td>
                   <td><%= a.post.name %></td>
                   <% if is_employer %>
-                  <td><%= link_to a.sender.name,
-                          user_path(a.sender.id) %></td>
+                  <td><%= link_to a.sender.name, user_path(a.sender.id) %></td>
                   <% else %>
-                  <td><%= link_to a.recipient.name,
-                          user_path(a.recipient.id) %></td>
+                  <td><%= link_to a.recipient.name, user_path(a.recipient.id) %></td>
                   <% end %>
                   <td><%= a.content %></td>
                   <td><%= a.status.capitalize %></td>

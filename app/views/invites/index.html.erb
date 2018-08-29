@@ -34,11 +34,9 @@
                       <td><%= datetime_format(i.created_at) %></td>
                       <td><%= i.post.name %></td>
                       <% if is_employer %>
-                      <td><%= link_to i.recipient.name,
-                              user_path(i.recipient.id) %></td>
+                      <td><%= link_to i.recipient.name, user_path(i.recipient.id) %></td>
                       <% else %>
-                      <td><%= link_to i.sender.name,
-                              user_path(i.sender.id) %></td>
+                      <td><%= link_to i.sender.name, user_path(i.sender.id) %></td>
                       <% end %>
                       <td><%= i.content %></td>
                       <td><%= i.status %></td>

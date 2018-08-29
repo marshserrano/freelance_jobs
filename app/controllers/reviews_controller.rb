@@ -16,7 +16,7 @@ class ReviewsController < ApplicationController
 
   def create
     @review = current_user.sent_reviews.new(review_params)
-    if current_user.employer?
+    if is_employer
       @review.reviewee_id = @job_application.sender_id
     else
       @review.reviewee_id = @job_application.recipient_id

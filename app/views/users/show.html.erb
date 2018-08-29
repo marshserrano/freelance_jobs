@@ -3,7 +3,7 @@
   <div class="col-md-12">
     <section class="user_info">
         <h4>User Profile</h4>
-        <% if current_user.id == @user.id %>
+        <% if current_user == @user %>
         <%= link_to 'Edit Profile', edit_user_path(current_user), class:"btn btn-default btn-sm" %> <br><br><br>
         <% end %>
           <strong>Name:</strong> <%= @user.name %><br>
@@ -27,7 +27,7 @@
     <% if @user.freelancer? %>
     <section class="user_info">
         <h4>Skills</h4>
-        <% if current_user.id == @user.id %>
+        <% if current_user == @user %>
         <%= link_to 'Add Skill', new_skill_path, class:"btn btn-default btn-sm" %> <br><br>
         <% end %>
 
@@ -68,7 +68,7 @@
                 <% if job.completed? %>
                   <tr id="job-<%= job.id %>">
                     <td><%= job.post.name %></td>
-                    <% if job.sender.user_type == "employer" %>
+                    <% if job.sender.employer? %>
                     <td><%= link_to job.sender.name,
                             user_path(job.sender.id) %></td>
                     <% else %>

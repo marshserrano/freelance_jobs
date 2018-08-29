@@ -3,58 +3,54 @@
   <div class="col-md-8">
 
     <section class="user_info">
+
       <% if is_employer %>
         <h4>Work In Progress</h4>
       <% else %>
         <h4>Current Work</h4>
       <% end %>
+
         <table>
           <thead>
             <tr>
               <th>Job Name</th>
-              <% if is_employer %>
+            <% if is_employer %>
               <th>Freelancer</th>
-              <% else %>
+            <% else %>
               <th>Employer</th>
-              <% end %>
+            <% end %>
               <th>Status</th>
-              <% if is_employer %>
+            <% if is_employer %>
               <th>Action</th>
-              <% end %>
+            <% end %>
             </tr>
           </thead>
           <tbody>
             <% @active_jobs.each do |job| %>
                 <tr id="job-<%= job.id %>">
                   <td><%= job.post.name %></td>
+
                   <% if is_employer %>
-                    <% if job.sender.user_type == "freelancer" %>
-                    <td><%= link_to job.sender.name,
-                            user_path(job.sender.id) %></td>
+                    <% if job.sender.freelancer? %>
+                    <td><%= link_to job.sender.name, user_path(job.sender.id) %></td>
                     <% else %>
-                    <td><%= link_to job.recipient.name,
-                            user_path(job.recipient.id) %></td>
+                    <td><%= link_to job.recipient.name, user_path(job.recipient.id) %></td>
                     <% end %>
-
                   <% else %>
-
-                    <% if job.sender.user_type == "employer" %>
-                    <td><%= link_to job.sender.name,
-                            user_path(job.sender.id) %></td>
+                    <% if job.sender.employer? %>
+                    <td><%= link_to job.sender.name, user_path(job.sender.id) %></td>
                     <% else %>
-                    <td><%= link_to job.recipient.name,
-                            user_path(job.recipient.id) %></td>
+                    <td><%= link_to job.recipient.name, user_path(job.recipient.id) %></td>
                     <% end %>
                   <% end %>
-                  <!-- <td>job.status = "In progress"</td> -->
-                  <td><%= job.status %></td>
+                  <td>In Progress</td>
+
                   <% if is_employer %>
-                    <% if job.accepted? %>
                     <td><%= link_to 'Finish Job', complete_active_job_path(job.id),
                                     data: { confirm: 'Are you sure you want to complete this job?' },
                                     class:"btn btn-primary btn-sm" %></td>
-                    <% end %>
                   <% end %>
+
                 </tr>
             <% end %>
           </tbody>

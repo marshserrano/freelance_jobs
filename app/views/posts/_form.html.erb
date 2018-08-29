@@ -11,12 +11,10 @@
   <%= f.text_field :skills, class: 'form-control', placeholder: 'skills' %>
 
   <%= f.label :budget %>
-  <!-- <%= f.number_field :budget, class: 'form-control', placeholder: 'per hour', :step => 0.01 %> -->
-  <%= f.text_field :budget, class: 'form-control' %>
+  <%= f.text_field :budget, class: 'form-control', placeholder: 'per hour' %>
 
   <%= f.label :hours_of_work %>
-  <!-- <%= f.number_field :hours_of_work, class: 'form-control', placeholder: 'hour/week', :step => 0.5 %> -->
-  <%= f.text_field :hours_of_work, class: 'form-control' %>
+  <%= f.text_field :hours_of_work, class: 'form-control', placeholder: 'hour/week' %>
 
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 <% end %>

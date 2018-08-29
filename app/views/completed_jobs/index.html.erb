@@ -28,26 +28,20 @@
                   <td><%= job.post.name %></td>
 
                   <% if is_employer %>
-                    <% if job.sender.user_type == "freelancer" %>
-                    <td><%= link_to job.sender.name,
-                            user_path(job.sender.id) %></td>
+                    <% if job.sender.freelancer? %>
+                    <td><%= link_to job.sender.name, user_path(job.sender.id) %></td>
                     <% else %>
-                    <td><%= link_to job.recipient.name,
-                            user_path(job.recipient.id) %></td>
+                    <td><%= link_to job.recipient.name, user_path(job.recipient.id) %></td>
                     <% end %>
-
                   <% else %>
-
-                    <% if job.sender.user_type == "employer" %>
-                    <td><%= link_to job.sender.name,
-                            user_path(job.sender.id) %></td>
+                    <% if job.sender.employer? %>
+                    <td><%= link_to job.sender.name, user_path(job.sender.id) %></td>
                     <% else %>
-                    <td><%= link_to job.recipient.name,
-                            user_path(job.recipient.id) %></td>
+                    <td><%= link_to job.recipient.name, user_path(job.recipient.id) %></td>
                     <% end %>
                   <% end %>
 
-                  <td><%= job.status %></td>
+                  <td><%= job.status.capitalize %></td>
 
                   <% if is_employer %>
                   <td><%= link_to 'Rate Freelancer', new_job_application_review_path(job.id) %></td>

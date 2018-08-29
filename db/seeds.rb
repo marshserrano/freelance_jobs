@@ -33,7 +33,7 @@ User.create!(name: "Freelancer Marsh",
 5.times do |f|
   name  = Faker::Name.name
   email = "freelancer#{f+1}@gmail.com"
-  password = "freelancer#{f+1}"
+  password = "freelancer"
   user_type = "freelancer"
   brief_intro = Faker::Job.title
   User.create!(name: name,

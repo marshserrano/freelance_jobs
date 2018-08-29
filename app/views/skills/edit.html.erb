@@ -1,0 +1,26 @@
+<% provide(:title, 'Edit Skill') %>
+
+<h3>Edit Skill</h3><br>
+
+<%= form_for(@skill) do |s| %>
+<div class="row">
+  <div class="col-md-4">
+      <%= render 'shared/error_messages', object: @skill %>
+
+      <%= s.label "Skill" %>
+      <%= s.text_field :name, class: 'form-control' %>
+
+      <%= s.label :rating %>
+      <%= s.select :rating, options_for_select([['1',1], ['2',2], ['3',3], ['4',4], ['5',5]],
+                   :selected => s.object.rating) %>
+
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-md-2">
+  <%= s.submit "Edit", class: "btn btn-primary" %>
+  <%= link_to "Cancel", current_user, class: "btn btn-danger btn-block" %>
+  </div>
+</div>
+  <% end %><br><br><br>

@@ -6,7 +6,7 @@
       <% if Post.open.any? %>
         <% Post.open.each do |j| %>
             <ul class="job_posts">
-              <li id="job_post-<%= j.id %>">
+              <li id="j-<%= j.id %>">
                 <span class="name"><h4><%= j.name %></h4></span>
                 <span class="description"><strong>Employer:</strong> <%= link_to j.user.name, user_path(j.user.id)%></span><br>
                 <span class="description"><strong>Description:</strong> <%= j.description %></span> <br>

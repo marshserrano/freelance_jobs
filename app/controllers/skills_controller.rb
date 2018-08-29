@@ -16,6 +16,20 @@ class SkillsController < ApplicationController
     end
   end
 
+  def edit
+    @skill = current_user.skills.find_by(id: params[:id])
+  end
+
+  def update
+    @skill = current_user.skills.find_by(id: params[:id])
+    if @skill.update_attributes(skill_params)
+      flash[:success] = "Skill updated"
+      redirect_to current_user
+    else
+      render 'edit'
+    end
+  end
+
   def destroy
     @skill = current_user.skills.find_by(id: params[:id])
     @skill.destroy
